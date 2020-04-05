@@ -6,11 +6,13 @@ This is a prototype design for a highly manufacturable ventilator. The ventilato
 
 ## Construction
 
-The prototypes were cut from 1/8" cast acrylic sheets on a laser cutting machine. The master file `ventilator2.svg` is an Inkscape file with a number of layers. Each part is made by combining one of the layers with the `plate` layer. Each part is 80mm by 80mm. The `test plate` layer isn't part of the ventilator; it can be used to test the basic function of an amplifier.
+The prototypes were cut from 1/8" cast acrylic sheets on a laser cutting machine. The master file `ventilator2.svg` is an Inkscape file with a number of layers. Each part is made by combining one of the layers with the `plate` layer. Each part is 80mm by 80mm. The `test plate` layer isn't part of the ventilator; it can be used to test the basic function of an amplifier. The `connection plate` layer provides holes to be tapped for 1/4" NPT threading; it must be made from thicker material.
 
 The top two plates were temporarily bolted together, and the 5 resistor holes were tapped with an M3 tap.
 
-A base plate for the supply and patient connections was cut by hand from 3/16" plexiglass. 1/4" holes were drilled for the bolt holes, over the vents, and over the expiration hole. 7/16" holes were drilled over the supply distribution line and the patient connection. The supply and patient connections were tapped with a 1/4" NPT tap. A 1/4" quick air hose disconnect was screwed into the supply hole with teflon tape. A 1/4" inner diameter plastic tubing connector was screwed into the patient hole with teflon tape.
+A connection plate for the supply and patient connections was cut by hand from 3/16" plexiglass. 1/4" holes were drilled for the bolt holes, over the vents, and over the expiration hole. 7/16" holes were drilled over the supply distribution line and the patient connection. The supply and patient connections were tapped with a 1/4" NPT tap. A 1/4" NPT tap is [designed to tap 0.53" of threading](http://www.actsensors.com/fittings.htm); if the base plate is thinner, in this case 3/16", the tap should not be used to its full depth, the difference should be left untapped. The last 5/16" (`0.53" - 3/16"`) of the tap was left unused. A template is included in the `connection plate` layer.
+
+A 1/4" quick air hose disconnect was screwed into the supply hole with teflon tape. A 1/4" inner diameter plastic tubing connector was screwed into the patient hole with teflon tape. 
 
 The plates are stacked together and bolted together with 40mm M6 bolts, nuts, and 12mm diameter washers. The bolts are tightened wrist-tight. The sides of the parts are indexed so that one can quickly check that it's been assembled correctly.  The indexed indentations should form a diagonal.
 
