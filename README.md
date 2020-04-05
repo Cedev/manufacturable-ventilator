@@ -22,8 +22,6 @@ The top plate takes M3 set screws, at least 4 mm long. One set screw is screwed 
 
 [Video of ventilator operating](https://www.youtube.com/watch?v=YwH6RFpGBYY)
 
-Card stock was added in between the resistor gasket and the comparator amplifier to block the amplifier vents from affecting the resistor vent pressure, and below the power amplifier.
-
 The ventilator was connected to a pressure regulated supply, nominally 3 psi, and attached to a test lung. The test lung had a nominal compliance of 20 mL/cm H20.
 
 All of the set screws were inserted all the way, increasing all resistances to their maximum. The four set screws on the two comparator inputs were cracked open, about a quarter of a turn. The resistor between expiration and control was opened until inpsiration started. The resistor between patient control and vent was opened until insipiration ended at a high pressure. The resistor between expiration and control was adjusted to set the pressure where inspiration starts. Also lots of tinkering and fiddling around was done.
