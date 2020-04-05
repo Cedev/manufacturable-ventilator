@@ -70,6 +70,8 @@ Rudimentry testing of an amplifier with a supply pressure of 3 psi resulted in 3
 
 [Image of 1965 army emergency respirator](https://agentgallery.com/objects/rare-1965-prototype-harry-diamond-labs-respirator)
 
+[The Army Emergency Respirator](https://wartimes.ca/wp-content/uploads/2020/03/AD680197.pdf)
+
 For fluidic amplifier background materials, see [fluidic-amplifiers](https://github.com/Cedev/fluidic-amplifiers#background-material)
 
 ----
