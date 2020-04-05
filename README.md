@@ -10,7 +10,7 @@ The prototypes were cut from 1/8" cast acrylic sheets on a laser cutting machine
 
 The top two plates were temporarily bolted together, and the 5 resistor holes were tapped with an M3 tap.
 
-A base plate for the supply and patient connections was cut by hand from 3/8" plexiglass. 1/4" holes were drilled for the bolt holes, over the vents, and over the expiration hole. 7/16" holes were drilled over the supply distribution line and the patient connection. The supply and patient connections were tapped with a 1/4" NPT tap. A 1/4" quick air hose disconnect was screwed into the supply hole with teflon tape. A 1/4" inner diameter plastic tubing connector was screwed into the patient hole with teflon tape.
+A base plate for the supply and patient connections was cut by hand from 3/16" plexiglass. 1/4" holes were drilled for the bolt holes, over the vents, and over the expiration hole. 7/16" holes were drilled over the supply distribution line and the patient connection. The supply and patient connections were tapped with a 1/4" NPT tap. A 1/4" quick air hose disconnect was screwed into the supply hole with teflon tape. A 1/4" inner diameter plastic tubing connector was screwed into the patient hole with teflon tape.
 
 The plates are stacked together and bolted together with 40mm M6 bolts, nuts, and 12mm diameter washers. The bolts are tightened wrist-tight. The sides of the parts are indexed so that one can quickly check that it's been assembled correctly.  The indexed indentations should form a diagonal.
 
