@@ -1,0 +1,151 @@
+
+   --- Expanded Deck Component Count ---
+A's 1
+B's 69
+C's 1
+L's 7
+R's 3
+V's 3
+tot: 84
+
+
+    --- Expanded Netlist ---
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\amp.asc
+v1 n006 0 10000 
+lsupply n006 n007 8510.63529468225 rser=0
+b§rsupply n007 supply r=1/(0.85 **2)*(3444780952.60948 *max(abs((i(lsupply))), 0.00170380227750929 *0.0001))
+v2 n017 0 pulse(0 1000 .004 1.5e-3 1.5e-3 1)
+lc1 n017 n013 flux=7234.04000047991 /v(d1)*x rser=0
+lc2 0 n001 flux=7234.04000047991 /v(d1)*x rser=0
+b§rcontrol1 n013 c1 r=v(rc1)*(3444780952.60948 *max(abs((i(lc1))), 0.00170380227750929 *0.0001))
+b§rcontrol2 n001 c2 r=v(rc2)*(3444780952.60948 *max(abs((i(lc2))), 0.00170380227750929 *0.0001))
+lo1 n011 0 11625.8475329975 rser=0
+lo2 n005 0 11625.8475329975 rser=0
+b§ro2 n004 n005 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(ro2))), 0.00170380227750929 *0.0001))
+b§ro1 n010 n011 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(ro1))), 0.00170380227750929 *0.0001))
+lv1 n014 0 7419.52820562042 rser=0
+lv2 n002 0 7419.52820562042 rser=0
+b§rv2 n003 n002 r=0.262984878369494 *(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
+rv1 n012 n014 1000000 
+b§qs qs 0 v=i(rsupply)/ 0.00170380227750929 
+b§qc1 qc1 0 v=i(rc1)/ 0.00170380227750929 
+b§qc2 qc2 0 v=i(rc2)/ 0.00170380227750929 
+b§qv1 qv1 0 v=i(rv1)/ 0.00170380227750929 
+b§qv2 qv2 0 v=i(rv2)/ 0.00170380227750929 
+b§qo1 qo1 0 v=i(ro1)/ 0.00170380227750929 
+b§qo2 qo2 0 v=i(ro2)/ 0.00170380227750929 
+b§d1_min d1_min 0 v=if(v(rec1)<2500, 0.9 ,-(0.9 - 0.6)*v(rec1)/1e-4+1.25* 0.9 -0.25* 0.6)
+b§d2_min d2_min 0 v=if(v(rec2)<2500, 0.9 ,-(0.9 - 0.6)*v(rec2)/1e-4+1.25* 0.9 -0.25* 0.6)
+b§rec1 rec1 0 v=abs(v(qc1)* 18194.6182692314)
+b§rec2 rec2 0 v=abs(v(qc2)* 18194.6182692314)
+b§fc1 fc1 0 v=(v(c1)/ 10000 +2*(uramp(v(qc1))/ 1)**2)* 1 
+b§fc2 fc2 0 v=(v(c2)/ 10000 +2*(uramp(v(qc2))/ 1)**2)* 1 
+b§fsy fsy 0 v=v(supply)/ 10000 +2*v(qs)**2
+bubble1 n009 n012 v=v(active1)*v(delpb)
+b§pc1 c1 n012 v=v(active1)*v(delpb)/2
+b§pc2 c2 n003 v=v(active2)*v(delpb)/2
+bubble2 n009 n003 v=v(active2)*v(delpb)
+b§psy n008 pb2 v=v(delpb)*3/4
+beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/v(fsy))
+b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
+b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
+b§v v 0 v=if(v(active1),v(vbubble1),v(vbubble2)) delay=0.00001
+b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
+b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
+b§wedge_area wedge_area 0 v=0.5*sin(v(beta))+(0.905 +0.5)*v(wedge_length)
+b§outside_area outside_area 0 v=0.5*(v(r)-v(wedge_length))*v(r)*sin(0.20944 +v(beta)+v(theta))
+bubble_area bubble_area 0 v=0.5*v(r)**2*(0.20944 +v(beta)+v(theta))+v(wedge_area)-v(outside_area)-v(area_past)
+r1 r 0 1
+b3 0 r i=v(r)+if(v(r) >=0, v(bubble_area)-v(v), v(r))
+b§ts ts 0 v=if(v(zet)> 3.14159265358979 /2-v(theta)- 0.20944 ,tanh(v(ys)* 10 /(v(ss)+ 10 /3)),1)
+b§zet zet 0 v=atan(v(r)*cos(v(beta))/(10 -v(r)*sin(v(beta))))
+b§ss ss 0 v=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2)
+b§ys ys 0 v=sqrt((v(r)*cos(v(beta)))**2+(10 -(v(r)*sin(v(beta)))**2))-v(r)
+b§t t 0 v=2*cos((2* 3.14159265358979 -acos(-v(b)/2))/3)
+b b 0 v=1.5*(-v(ts)+(v(ts)**3/3)+2/3+(2/3+v(ts)-(v(ts)**3/3))*cos(v(theta)))
+a§state n015 n016 0 0 0 active1 active2 0 srflop
+b§to2 n015 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active1),0)
+b§to1 n016 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active2),0)
+b§orient orient 0 v=v(active1)-v(active2)
+b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 0.00170380227750929 ,v(wedge_area)*2,v(active2))
+b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,v(wedge_area)*2,v(active1))
+b§qr qr 0 v=0.5*i(rsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))
+b§qe qe 0 v=0.5*i(rsupply)*(sqrt(0.3 *v(s1)+1)-1)
+b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
+b§dyc dyc 0 v=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta)))
+b§delpb delpb 0 v=2* 3444780952.60948 *i(rsupply)*i(rsupply)/(v(r)+1e-5)
+b§qr2 n003 pb2 i=v(active2)*v(qr)
+b§qe1 pb2 n012 i=v(active1)*v(qe)
+b§qe2 pb2 n003 i=v(active2)*v(qe)
+b§qr1 n012 pb2 i=v(active1)*v(qr)
+b§pda pda 0 v=3444780952.60948 *0.75*i(rsupply)**2*(v(ts)+v(t)-(v(ts)**3+v(t)**3)/3)/ 3.45341893472363 
+b§pdi pdi 0 v=3444780952.60948 *0.75*i(rsupply)**2*(2/3-v(ts)+v(ts)**3/3)/ 3.45341893472363 
+b§pd2 n004 pb2 v=v(pdi)
+b§pd1 n010 pb2 v=v(pda)
+b§rcmin1 rcmin1 0 v=1/(1 **2*v(d1_min))
+b§rcmin2 rcmin2 0 v=1/(1 **2*v(d2_min))
+b§rc1d rc1d 0 v=1/(1.11755707355829 +v(orient)*v(dyc)**2+1e-5)
+b§rc2d rc2d 0 v=1/(1.11755707355829 -v(orient)*v(dyc)**2+1e-5)
+b§rc1 rc1 0 v=max(min(v(rc1d), 50.0151045615776),v(rcmin1))
+b§rc2 rc2 0 v=max(min(v(rc2d), 50.0151045615776),v(rcmin2))
+b§d1 d1 0 v=if(v(rc1)==v(rc1d), 1, v(d1_min))
+b§d2 d2 0 v=if(v(rc2)==v(rc2d), 1, v(d2_min))
+b1 probe 0 v=sqrt(10000 * 0.85 **2/ 3444780952.60948)
+cinside pb2 0 1.29969535852441e-08 
+v3 supply 0 100
+r2 n008 supply 1
+b2 probe2 0 v=0.00170380227750929 
+.op
+.end
+
+WARNING: Less than two connections to node QV1.  This node is used by QV1.
+WARNING: Less than two connections to node QV2.  This node is used by QV2.
+WARNING: Less than two connections to node QO1.  This node is used by QO1.
+WARNING: Less than two connections to node QO2.  This node is used by QO2.
+WARNING: Less than two connections to node D2.  This node is used by D2.
+WARNING: Less than two connections to node PROBE.  This node is used by B1.
+WARNING: Less than two connections to node PROBE2.  This node is used by B2.
+Singular matrix:  Check node r
+   Iteration No. 1
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 1.01058
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+Source Step = 33.3333%
+Source Step = 63.6364%
+Source Step = 93.9394%
+Source stepping succeeded in finding the operating point.
+
+
+Date: Sun Apr 12 00:24:35 2020
+Total elapsed time: 0.646 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 1889
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 141
+fillins = 245
+solver = Alternate
+
