@@ -79,12 +79,11 @@ B§RC2 RC2 0 V=max(min(v(RC2D), RCMAX), v(RCMIN2))
 B§D1 D1 0 V=if(v(RC1)==v(RC1D), 1, v(D1_min))
 B§D2 D2 0 V=if(v(RC2)==v(RC2D), 1, v(D2_min))
 B1 probe 0 V=sqrt(P0*CS**2/redim_Q2)
-Cinside NC_04 0 {sin(ALPH)*(LGTHS*B0)**2*H0/100}
 V3 Supply 0 -329
 R2 PB2 Supply 1
 B2 probe2 0 V=redim_Q2*redim_Q
 .param rho=1.2059 sigma=10 nu=1.4864e-5
-.op
+.tran .04
 .param D=0.905 B0=2.1e-3 BC=1 ALPH=.20944 XV1=8.640 LGTHC=10 AREAC=2 LGTHS=15 AREAS=3 LGTHV=10 AREAV=1.95 SPL=10 LGTHR=27.75 P0=10000 CS=0.85
 .param H0=3*B0
 .param Qref=B0*sqrt(2*P0/rho) RE=Qref/nu

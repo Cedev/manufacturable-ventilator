@@ -2,11 +2,10 @@
    --- Expanded Deck Component Count ---
 A's 1
 B's 69
-C's 1
 L's 7
 R's 3
 V's 3
-tot: 84
+tot: 83
 
 
     --- Expanded Netlist ---
@@ -91,14 +90,11 @@ b§rc2 rc2 0 v=max(min(v(rc2d), 50.0151045615776),v(rcmin2))
 b§d1 d1 0 v=if(v(rc1)==v(rc1d), 1, v(d1_min))
 b§d2 d2 0 v=if(v(rc2)==v(rc2d), 1, v(d2_min))
 b1 probe 0 v=sqrt(10000 * 0.85 **2/ 3444780952.60948)
-cinside nc_04 0 1.29969535852441e-08 
 v3 supply 0 -329
 r2 pb2 supply 1
 b2 probe2 0 v=3444780952.60948 * 0.00170380227750929 
-.op
+.tran .04
 .end
-
-WARNING: Node NC_04 is floating.
 
 WARNING: Less than two connections to node QV1.  This node is used by QV1.
 WARNING: Less than two connections to node QV2.  This node is used by QV2.
@@ -107,7 +103,6 @@ WARNING: Less than two connections to node QO2.  This node is used by QO2.
 WARNING: Less than two connections to node N007.  This node is used by PSY.
 WARNING: Less than two connections to node D2.  This node is used by D2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
-WARNING: Less than two connections to node NC_04.  This node is used by CINSIDE.
 WARNING: Less than two connections to node PROBE2.  This node is used by B2.
 Singular matrix:  Check node r
    Iteration No. 1
@@ -133,7 +128,8 @@ Gmin stepping failed
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 Source Step = 28.0303%
-Source Step = 28.0481%
+vernier = 0.0625
+Source Step = 27.2934%
 Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
 Source Step = 28.0303%
@@ -152,22 +148,27 @@ vernier = 0.5625
 Source Step = 100%
 Source stepping succeeded in finding the operating point.
 
+Changing Tseed to 3.90625e-09
+Changing Tseed to 3.90625e-11
+Changing Tseed to 3.90625e-08
+Changing Tseed to 3.90625e-12
+Changing Tseed to 3.90625e-07
 
-Date: Sun Apr 12 01:11:15 2020
-Total elapsed time: 1.899 seconds.
+Date: Sun Apr 12 01:24:28 2020
+Total elapsed time: 2.934 seconds.
 
 tnom = 27
 temp = 27
-method = trap
-totiter = 5750
-traniter = 0
-tranpoints = 0
-accept = 0
-rejected = 0
-matrix size = 142
-fillins = 217
+method = modified trap
+totiter = 10469
+traniter = 4400
+tranpoints = 1060
+accept = 1049
+rejected = 6
+matrix size = 141
+fillins = 223
 solver = Alternate
-Thread vector: 38.6/16.5[4] 0.0/0.0[0] 69.2/14.6[4] 1.6/20.0[1]  2592/500
-Matrix Compiler1: 16.68 KB object code size
-Matrix Compiler2: 13.89 KB object code size  6.4/408.2/[1.1]
+Thread vector: 41.5/14.1[4] 0.8/8.5[1] 10.5/5.4[4] 1.1/28.2[1]  2592/500
+Matrix Compiler1: 15.65 KB object code size  3.7/2.9/[1.7]
+Matrix Compiler2: 14.12 KB object code size  3.7/2.6/[0.9]
 
