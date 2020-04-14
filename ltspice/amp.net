@@ -16,8 +16,8 @@ Lv2 N002 0 {2*LGTHV/(H0*AREAV)*redim_dQdt} Rser=0
 Rv2 PBubble2 N002 R=RVI*absq2(i(Lv2))
 Rv1 PBubble1 N008 {R_blocked_vent}
 B利S QS 0 V=i(Lsupply)/redim_Q
-B利C1 QC1 0 V=0.197
-B利C2 QC2 0 V=0.066
+B利C1 QC1 0 V=i(Lc1)/redim_Q
+B利C2 QC2 0 V=i(Lc2)/redim_Q
 B利V1 QV1 0 V=i(Rv1)/redim_Q
 B利V2 QV2 0 V=i(Rv2)/redim_Q
 B利O1 QO1 0 V=i(Ro1)/redim_Q
