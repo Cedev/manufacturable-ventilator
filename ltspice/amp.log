@@ -49,7 +49,7 @@ b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
 b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
 b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
-b§v v 0 v=13.9
+b§v v 0 v=13.933319
 b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
 b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
 b§wedge_area wedge_area 0 v=0.5*sin(v(beta))*(0.905 +0.5)*v(wedge_length)
@@ -67,8 +67,8 @@ a§state n009 n010 0 0 0 active1 active2 0 srflop
 b§to2 n009 0 v=if(v(lsp)>=10 ,v(active1),0)
 b§to1 n010 0 v=if(v(lsp)>=10 ,v(active2),0)
 b§orient orient 0 v=v(active1)-v(active2)
-b§vbubble1 vbubble1 0 v=sdt(-i(bubble1), 5, v(active2))
-b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,13.9,v(active1))
+b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 2.7783e-08 ,5,v(active2))
+b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 2.7783e-08 ,13.9,v(active1))
 b§qr qr 0 v=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp)
 b§qe qe 0 v=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp)
 b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
@@ -113,26 +113,12 @@ WARNING: Less than two connections to node PROBE2.  This node is used by B2.
 WARNING: Less than two connections to node V_MIN.  This node is used by V_MIN.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
-Gmin = 10
-Gmin = 1.07374
-Gmin = 0.115292
-Gmin = 0.0123794
-Gmin = 0.00132923
-Gmin = 0.000142725
-Gmin = 1.5325e-05
-Gmin = 1.6455e-06
-Gmin = 1.76685e-07
-Gmin = 1.89714e-08
-Gmin = 2.03704e-09
-Gmin = 2.18725e-10
-Gmin = 2.34854e-11
-Gmin = 2.52173e-12
-Gmin = 2.70769e-13
-Singular matrix:  Check node r
-   Iteration No. 2
-Gmin = 0
-Singular matrix:  Check node r
-   Iteration No. 1
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
 Gmin stepping failed
 
 Starting source stepping with srcstepmethod=0
@@ -155,22 +141,22 @@ Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
 Source stepping failed
 
-Pseudo Transient succeeded in finding the operating point at 41.4766 s.
+Pseudo transient terminated at 100.285 s, solution accepted ready or not!
 
-Date: Tue Apr 14 00:31:51 2020
-Total elapsed time: 11.442 seconds.
+Date: Tue Apr 14 00:44:26 2020
+Total elapsed time: 8.624 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 195776
-traniter = 2210
+totiter = 225742
+traniter = 3222
 tranpoints = 1104
 accept = 1089
-rejected = 4880
+rejected = 5413
 matrix size = 146
-fillins = 605
+fillins = 488
 solver = Normal
-Thread vector: 35.5/27.2[4] 1.5/24.4[1] 1.9/2.9[1] 0.5/41.6[1]  2592/500
-Matrix Compiler1:    3113 opcodes  13.7/[7.5]/8.8
-Matrix Compiler2:    1385 opcodes
+Thread vector: 27.4/8.3[4] 0.8/2.2[1] 1.9/2.2[1] 0.5/12.2[1]  2592/500
+Matrix Compiler1:    2412 opcodes  15.2/[8.2]/9.4
+Matrix Compiler2: off

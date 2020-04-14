@@ -37,7 +37,7 @@ B§psy PB2 Supply V=v(delpb)*1/4
 BETA BETA 0 V=atan(v(orient)*(v(FC1)-v(FC2))/eps(v(FSY)))
 B§length_past length_past 0 V=uramp(v(R)-v(R)*cos(v(BETA)-ALPH)-A2)
 B§area_past area_past 0 V=v(R)**2*acos((v(R)-v(length_past))/v(R))-(v(R)-v(length_past))*sqrt(2*v(R)*v(length_past)-v(length_past)**2)
-B§V V 0 V=13.9
+B§V V 0 V=13.933319
 B§wedge_length wedge_length 0 V=A2/cos(v(BETA)+ALPH)
 B§theta theta 0 V=acos(cos(v(BETA)+ALPH)-A2/v(r))
 B§wedge_area wedge_area 0 V=0.5*sin(v(BETA))*(D+0.5)*v(wedge_length)
@@ -55,8 +55,8 @@ A§State N009 N010 0 0 0 Active1 Active2 0 SRFLOP
 B§To2 N009 0 V=if(v(LSP) >= SPL, v(Active1), 0)
 B§To1 N010 0 V=if(v(LSP) >= SPL, v(Active2), 0)
 B§orient orient 0 V=v(Active1)-v(Active2)
-B§VBubble1 VBubble1 0 V=sdt(-i(Bubble1), 5, v(Active2))
-B§VBubble2 VBubble2 0 V=sdt(-i(Bubble2)/redim_Q, 13.9, v(Active1))
+B§VBubble1 VBubble1 0 V=sdt(-i(Bubble1)/redim_V, 5, v(Active2))
+B§VBubble2 VBubble2 0 V=sdt(-i(Bubble2)/redim_V, 13.9, v(Active1))
 B§qr qr 0 V=0.5*i(Lsupply)*sqrt(A1*v(S1)+1)*(1-v(T))*v(Ramp)
 B§qe qe 0 V=0.5*i(Lsupply)*(sqrt(A1*v(S1)+1)-1)*v(Ramp)
 B§S1 S1 0 V=v(R)*(ALPH+v(BETA)+v(theta))
