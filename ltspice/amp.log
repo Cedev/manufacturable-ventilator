@@ -1,12 +1,12 @@
 
    --- Expanded Deck Component Count ---
 A's 1
-B's 69
+B's 70
 C's 1
 L's 7
 R's 2
 V's 3
-tot: 83
+tot: 84
 
 
     --- Expanded Netlist ---
@@ -46,10 +46,10 @@ b§pc1 c1 pbubble1 v=v(active1)*v(delpb)/2
 b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
 bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
 b§psy pb2 supply v=v(delpb)*1/4
-beta beta 0 v=0.016
+beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
 b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
 b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
-b§v v 0 v=13.9 delay=0.00001
+b§v v 0 v=13.933319 delay=0.00001
 b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
 b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
 b§wedge_area wedge_area 0 v=0.5*sin(v(beta))*(0.905 +0.5)*v(wedge_length)
@@ -64,16 +64,16 @@ b§ys ys 0 v=sqrt((v(r)*cos(v(beta)))**2+(10 -v(r)*sin(v(beta)))**2)-v(r)
 b§t t 0 v=2*cos((2* 3.14159265358979 -acos(-v(b)/2))/3)
 b b 0 v=1.5*(-v(ts)+(v(ts)**3/3)+2/3+(2/3+v(ts)-(v(ts)**3/3))*cos(v(theta)))
 a§state n009 n010 0 0 0 active1 active2 0 srflop
-b§to2 n009 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active1),0)
-b§to1 n010 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active2),0)
+b§to2 n009 0 v=if(v(lsp)>=10 ,v(active1),0)
+b§to1 n010 0 v=if(v(lsp)>=10 ,v(active2),0)
 b§orient orient 0 v=v(active1)-v(active2)
-b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 0.00170380227750929 ,6,v(active2))
-b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,6,v(active1))
+b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 0.00170380227750929 ,13.9,v(active2))
+b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,13.9,v(active1))
 b§qr qr 0 v=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp)
 b§qe qe 0 v=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp)
 b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
 b§dyc dyc 0 v=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta)))
-b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/(v(r)+1e-5)*v(ramp)**3
+b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3
 b§qr2 pbubble2 pb2 i=v(active2)*v(qe)
 b§qe1 pb2 pbubble1 i=v(active1)*v(qe)
 b§qe2 pb2 pbubble2 i=v(active2)*v(qr)
@@ -84,16 +84,17 @@ b§pd2 pout2 pb2 v=v(pdi)
 b§pd1 pout1 pb2 v=v(pda)
 b§rcmin1 rcmin1 0 v=1/(1 **2*v(d1_min)**2)
 b§rcmin2 rcmin2 0 v=1/(1 **2*v(d2_min)**2)
-b§rc1d rc1d 0 v=1/((1.11755707355829 +v(orient)*v(dyc))**2)
-b§rc2d rc2d 0 v=1/((1.11755707355829 -v(orient)*v(dyc)**2))
+b§rc1d rc1d 0 v=1/(((1.11755707355829 +v(orient)*v(dyc))+if((1.11755707355829 +v(orient)*v(dyc))>=0,1,-1)* 1e-05 /(1+exp(abs((1.11755707355829 +v(orient)*v(dyc)))/10)))**2)
+b§rc2d rc2d 0 v=1/(((1.11755707355829 -v(orient)*v(dyc)**2)+if((1.11755707355829 -v(orient)*v(dyc)**2)>=0,1,-1)* 1e-05 /(1+exp(abs((1.11755707355829 -v(orient)*v(dyc)**2))/10))))
 b§rc1 rc1 0 v=max(min(v(rc1d), 50.0151045615776),v(rcmin1))
 b§rc2 rc2 0 v=max(min(v(rc2d), 50.0151045615776),v(rcmin2))
 b§d1 d1 0 v=if(v(rc1)==v(rc1d), 1, v(d1_min))
 b§d2 d2 0 v=if(v(rc2)==v(rc2d), 1, v(d2_min))
-b1 probe 0 v=sqrt(10000 * 0.85 **2/ 3444780952.60948)
+b1 probe 0 v=atan(v(orient)*(v(fc1)-v(fc2))/v(fsy))
 b2 probe2 0 v=3444780952.60948 * 0.00170380227750929 
 cap pb2 0 2.0630085055943e-06 
 v§ramp ramp 0 1
+b§lsp lsp 0 v=2*v(r)*sin(v(beta))
 .tran 50
 .option noopiter
 .end
@@ -103,9 +104,6 @@ WARNING: Less than two connections to node QV1.  This node is used by QV1.
 WARNING: Less than two connections to node QV2.  This node is used by QV2.
 WARNING: Less than two connections to node QO1.  This node is used by QO1.
 WARNING: Less than two connections to node QO2.  This node is used by QO2.
-WARNING: Less than two connections to node FC1.  This node is used by FC1.
-WARNING: Less than two connections to node FC2.  This node is used by FC2.
-WARNING: Less than two connections to node FSY.  This node is used by FSY.
 WARNING: Less than two connections to node VBUBBLE1.  This node is used by VBUBBLE1.
 WARNING: Less than two connections to node VBUBBLE2.  This node is used by VBUBBLE2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
@@ -123,28 +121,38 @@ Gmin stepping failed
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 vernier = 0.25
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 3
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
 Source Step = 0.0177557%
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
 Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
-vernier = 0.25
 Source stepping failed
 
-Pseudo Transient succeeded in finding the operating point at 41.481 s.
+Pseudo Transient succeeded in finding the operating point at 41.4833 s.
 
-Date: Mon Apr 13 20:43:14 2020
-Total elapsed time: 8.658 seconds.
+Date: Mon Apr 13 22:19:13 2020
+Total elapsed time: 9.164 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 198538
-traniter = 2904
+totiter = 196453
+traniter = 2498
 tranpoints = 1104
 accept = 1089
-rejected = 4912
-matrix size = 140
-fillins = 404
+rejected = 4875
+matrix size = 142
+fillins = 485
 solver = Normal
-Thread vector: 26.5/18.0[4] 0.6/1.3[1] 3.4/1.8[4] 0.5/19.1[1]  2592/500
-Matrix Compiler1:    1306 opcodes  3.7/[1.8]/1.8
-Matrix Compiler2: off
+Matrix Compiler1:    2296 opcodes  8.9/[6.5]/11.8
+Matrix Compiler2:    1244 opcodes
