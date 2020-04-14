@@ -1,0 +1,49 @@
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_test.asc
+XX1 N004 N003 N002 N001 R NC_01 NC_02 NC_03 NC_04 bubble_volume
+VDplus N003 0 1.405
+Valph N004 0 0.20944
+VBeta N002 0 0.0160524
+Varea N001 0 13.933391
+
+* block symbol definitions
+.subckt bubble_volume alph step beta area radius theta arc min_area x
+B§length_past length_past 0 V=v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph))
+Bwedge_length wedge_length 0 V=cos(v(alph))*v(step)/cos(v(gamma))
+Bwedge_area N002 N003 V=0.5*sin(v(beta))*v(step)*v(wedge_length)
+Boutside_area N004 N003 V=0.5*(v(r)-v(wedge_length))*v(r)*sin(v(omega))
+Bsegment_area N004 0 V=0.5*v(r)**2*(v(omega))
+XX1 length_past r area_past NC_01 NC_02 chord
+Barc 0 arc I=v(R)*(v(omega)) rpar=1
+Ealph N001 0 alph 0 1
+Egamma gamma N001 beta 0 1
+Gr 0 r r 0 1
+Rr r 0 1
+Gerror 0 r bubble_area area 1
+Btheta 0 theta I=acos(cos(v(gamma))-v(step)*cos(v(alph))/v(r)) rpar=1
+Eomega omega gamma theta 0 1
+Earea_past bubble_area N002 0 area_past 1
+R1 x 0 1
+R2 min_area 0 1
+XX2 step nc
+XX3 r radius id
+.ends bubble_volume
+
+.subckt chord h radius A r theta
+Btheta 0 theta I=2*acos(v(r)/v(radius)) rpar=1
+BA 0 A I=0.5*v(radius)**2*(v(theta) - sin(v(theta))) rpar=1
+Er r 0 radius h 1
+.ends chord
+
+.subckt nc x
+XX1 x P001 id
+R1 0 P001 1
+.ends nc
+
+.subckt id x id_x
+G1 0 id_x x 0 1
+R1 id_x 0 1
+.ends id
+
+.dc Varea 0 20 0.1
+.backanno
+.end
