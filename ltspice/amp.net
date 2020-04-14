@@ -1,20 +1,20 @@
 * C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\amp.asc
-V1 N006 0 {P0}
-Lsupply N006 N007 {2*LGTHS/(H0*AREAS)/CS*redim_dQdt} Rser=0
-Rsupply N007 Supply R=1/(CS**2)*absq2(i(Lsupply))
+V1 N004 0 {P0}
+Lsupply N004 N005 {2*LGTHS/(H0*AREAS)/CS*redim_dQdt} Rser=0
+Rsupply N005 Supply R=1/(CS**2)*absq2(i(Lsupply))
 V2 0 NC_01 PULSE(0 1000 .004 1.5e-3 1.5e-3 1)
-Lc1 0 N011 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D1)*x Rser=0
+Lc1 0 N007 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D1)*x Rser=0
 Lc2 0 N001 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D2)*x Rser=0
-Rcontrol1 N011 C1 R=v(RC1)*absq2(i(Lc1))
+Rcontrol1 N007 C1 R=v(RC1)*absq2(i(Lc1))
 Rcontrol2 N001 C2 R=v(RC2)*absq2(i(Lc2))
-Lo1 N009 0 {2*LGTHR/(H0*AREAR)*redim_dQdt} Rser=0
-Lo2 N004 0 {2*LGTHR/(H0*AREAR)*redim_dQdt} Rser=0
-Ro2 pout2 N004 R=1/(AREAR**2)*absq2(i(Lo2))
-Ro1 pout1 N009 R=1/(AREAR**2)*absq2(i(Lo1))
-Lv1 N012 0 {2*LGTHV/(H0*AREAV)*redim_dQdt} Rser=0
+Lo1 N006 0 {2*LGTHR/(H0*AREAR)*redim_dQdt} Rser=0
+Lo2 N003 0 {2*LGTHR/(H0*AREAR)*redim_dQdt} Rser=0
+Ro2 pout2 N003 R=1/(AREAR**2)*absq2(i(Lo2))
+Ro1 pout1 N006 R=1/(AREAR**2)*absq2(i(Lo1))
+Lv1 N008 0 {2*LGTHV/(H0*AREAV)*redim_dQdt} Rser=0
 Lv2 N002 0 {2*LGTHV/(H0*AREAV)*redim_dQdt} Rser=0
-Rv2 N003 N002 R=RVI*absq2(i(Lv2))
-Rv1 N010 N012 {R_blocked_vent}
+Rv2 PBubble2 N002 R=RVI*absq2(i(Lv2))
+Rv1 PBubble1 N008 {R_blocked_vent}
 B§QS QS 0 V=i(Lsupply)/redim_Q
 B§QC1 QC1 0 V=0.197
 B§QC2 QC2 0 V=0.066
@@ -29,10 +29,10 @@ B§REC2 REC2 0 V=abs(v(QC2)*RE)
 B§FC1 FC1 0 V=(v(C1)/P0+2*(uramp(v(QC1))/BC)**2)*BC
 B§FC2 FC2 0 V=(v(C2)/P0+2*(uramp(v(QC2))/BC)**2)*BC
 B§FSY FSY 0 V=v(Supply)/P0+2*v(QS)**2
-Bubble1 N008 N010 V=v(Active1)*v(delpb)
-B§pc1 C1 N010 V=v(Active1)*v(delpb)/2
-B§pc2 C2 N003 V=v(Active2)*v(delpb)/2
-Bubble2 N008 N003 V=v(Active2)*v(delpb)
+Bubble1 PB2 PBubble1 V=v(Active1)*v(delpb)
+B§pc1 C1 PBubble1 V=v(Active1)*v(delpb)/2
+B§pc2 C2 PBubble2 V=v(Active2)*v(delpb)/2
+Bubble2 PB2 PBubble2 V=v(Active2)*v(delpb)
 B§psy PB2 Supply V=v(delpb)*1/4
 BETA BETA 0 V=0.016
 B§length_past length_past 0 V=uramp(v(R)-v(R)*cos(v(BETA)-ALPH)-A2)
@@ -51,9 +51,9 @@ B§SS SS 0 V=v(R)*(v(BETA)-v(ZET)+pi/2)
 B§YS YS 0 V=sqrt((v(R)*cos(v(BETA)))**2+(SPL-v(R)*sin(v(BETA)))**2)-v(R)
 B§T T 0 V=2*cos((2*pi-acos(-v(B)/2))/3)
 B B 0 V=1.5*(-v(TS)+(v(TS)**3/3)+2/3+(2/3+v(TS)-(v(TS)**3/3))*cos(v(THETA)))
-A§State N013 N014 0 0 0 Active1 Active2 0 SRFLOP
-B§To2 N013 0 V=if(2*v(R)*sin(v(BETA)) >= SPL, v(Active1), 0)
-B§To1 N014 0 V=if(2*v(R)*sin(v(BETA)) >= SPL, v(Active2), 0)
+A§State N009 N010 0 0 0 Active1 Active2 0 SRFLOP
+B§To2 N009 0 V=if(2*v(R)*sin(v(BETA)) >= SPL, v(Active1), 0)
+B§To1 N010 0 V=if(2*v(R)*sin(v(BETA)) >= SPL, v(Active2), 0)
 B§orient orient 0 V=v(Active1)-v(Active2)
 B§VBubble1 VBubble1 0 V=sdt(-i(Bubble1)/redim_Q, v(Active2))
 B§VBubble2 VBubble2 0 V=sdt(-i(Bubble2)/redim_Q, v(Active1))
@@ -61,11 +61,11 @@ B§qr qr 0 V=0.5*i(Lsupply)*sqrt(A1*v(S1)+1)*(1-v(T))*v(Ramp)
 B§qe qe 0 V=0.5*i(Lsupply)*(sqrt(A1*v(S1)+1)-1)*v(Ramp)
 B§S1 S1 0 V=v(R)*(ALPH+v(BETA)+v(theta))
 B§DYC DYC 0 V=-v(R)*cos(v(BETA))+sqrt((cos(v(BETA))*v(R))**2-BC*BC+2*BC*v(R)*sin(v(BETA)))
-B§delpb delpb 0 V=2*redim_Q2*i(LSupply)**2/(v(R)+1e-5)*v(Ramp)**2
-B§QR2 N003 PB2 I=v(Active2)*v(qe)
-B§QE1 PB2 N010 I=v(Active1)*v(qe)
-B§QE2 PB2 N003 I=v(Active2)*v(qr)
-B§QR1 N010 PB2 I=v(Active1)*v(qr)
+B§delpb delpb 0 V=2*redim_Q2*i(LSupply)**2/(v(R)+1e-5)*v(Ramp)**3
+B§QR2 PBubble2 PB2 I=v(Active2)*v(qe)
+B§QE1 PB2 PBubble1 I=v(Active1)*v(qe)
+B§QE2 PB2 PBubble2 I=v(Active2)*v(qr)
+B§QR1 PBubble1 PB2 I=v(Active1)*v(qr)
 B§pda pda 0 V=redim_Q2*0.75*i(Rsupply)**2*(v(TS)+v(T)-(v(TS)**3+v(T)**3)/3)/AREAR*v(Ramp)
 B§pdi pdi 0 V=redim_Q2*0.75*i(Rsupply)**2*(2/3-v(TS)+v(TS)**3/3)/AREAR*v(Ramp)
 B§PD2 pout2 PB2 V=v(pdi)
@@ -79,8 +79,6 @@ B§RC2 RC2 0 V=max(min(v(RC2D), RCMAX), v(RCMIN2))
 B§D1 D1 0 V=if(v(RC1)==v(RC1D), 1, v(D1_min))
 B§D2 D2 0 V=if(v(RC2)==v(RC2D), 1, v(D2_min))
 B1 probe 0 V=sqrt(P0*CS**2/redim_Q2)
-V3 Supply 0 -297
-R2 N005 Supply 1
 B2 probe2 0 V=redim_Q2*redim_Q
 Cap PB2 0 {sin(ALPH)*(LGTHS*B0)**2/100}
 V§Ramp Ramp 0 1

@@ -4,29 +4,29 @@ A's 1
 B's 69
 C's 1
 L's 7
-R's 3
-V's 4
-tot: 85
+R's 2
+V's 3
+tot: 83
 
 
     --- Expanded Netlist ---
 * C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\amp.asc
-v1 n006 0 10000 
-lsupply n006 n007 8510.63529468225 rser=0
-b§rsupply n007 supply r=1/(0.85 **2)*(3444780952.60948 *max(abs((i(lsupply))), 0.00170380227750929 *0.0001))
+v1 n004 0 10000 
+lsupply n004 n005 8510.63529468225 rser=0
+b§rsupply n005 supply r=1/(0.85 **2)*(3444780952.60948 *max(abs((i(lsupply))), 0.00170380227750929 *0.0001))
 v2 0 nc_01 pulse(0 1000 .004 1.5e-3 1.5e-3 1)
-lc1 0 n011 flux=7234.04000047991 /v(d1)*x rser=0
+lc1 0 n007 flux=7234.04000047991 /v(d1)*x rser=0
 lc2 0 n001 flux=7234.04000047991 /v(d2)*x rser=0
-b§rcontrol1 n011 c1 r=v(rc1)*(3444780952.60948 *max(abs((i(lc1))), 0.00170380227750929 *0.0001))
+b§rcontrol1 n007 c1 r=v(rc1)*(3444780952.60948 *max(abs((i(lc1))), 0.00170380227750929 *0.0001))
 b§rcontrol2 n001 c2 r=v(rc2)*(3444780952.60948 *max(abs((i(lc2))), 0.00170380227750929 *0.0001))
-lo1 n009 0 11625.8475329975 rser=0
-lo2 n004 0 11625.8475329975 rser=0
-b§ro2 pout2 n004 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo2))), 0.00170380227750929 *0.0001))
-b§ro1 pout1 n009 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo1))), 0.00170380227750929 *0.0001))
-lv1 n012 0 7419.52820562042 rser=0
+lo1 n006 0 11625.8475329975 rser=0
+lo2 n003 0 11625.8475329975 rser=0
+b§ro2 pout2 n003 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo2))), 0.00170380227750929 *0.0001))
+b§ro1 pout1 n006 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo1))), 0.00170380227750929 *0.0001))
+lv1 n008 0 7419.52820562042 rser=0
 lv2 n002 0 7419.52820562042 rser=0
-b§rv2 n003 n002 r=0.262984878369494 *(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
-rv1 n010 n012 5869225632576.65 
+b§rv2 pbubble2 n002 r=0.262984878369494 *(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
+rv1 pbubble1 n008 5869225632576.65 
 b§qs qs 0 v=i(lsupply)/ 0.00170380227750929 
 b§qc1 qc1 0 v=0.197
 b§qc2 qc2 0 v=0.066
@@ -41,10 +41,10 @@ b§rec2 rec2 0 v=abs(v(qc2)* 18194.6182692314)
 b§fc1 fc1 0 v=(v(c1)/ 10000 +2*(uramp(v(qc1))/ 1)**2)* 1 
 b§fc2 fc2 0 v=(v(c2)/ 10000 +2*(uramp(v(qc2))/ 1)**2)* 1 
 b§fsy fsy 0 v=v(supply)/ 10000 +2*v(qs)**2
-bubble1 n008 n010 v=v(active1)*v(delpb)
-b§pc1 c1 n010 v=v(active1)*v(delpb)/2
-b§pc2 c2 n003 v=v(active2)*v(delpb)/2
-bubble2 n008 n003 v=v(active2)*v(delpb)
+bubble1 pb2 pbubble1 v=v(active1)*v(delpb)
+b§pc1 c1 pbubble1 v=v(active1)*v(delpb)/2
+b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
+bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
 b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=0.016
 b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
@@ -63,9 +63,9 @@ b§ss ss 0 v=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2)
 b§ys ys 0 v=sqrt((v(r)*cos(v(beta)))**2+(10 -v(r)*sin(v(beta)))**2)-v(r)
 b§t t 0 v=2*cos((2* 3.14159265358979 -acos(-v(b)/2))/3)
 b b 0 v=1.5*(-v(ts)+(v(ts)**3/3)+2/3+(2/3+v(ts)-(v(ts)**3/3))*cos(v(theta)))
-a§state n013 n014 0 0 0 active1 active2 0 srflop
-b§to2 n013 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active1),0)
-b§to1 n014 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active2),0)
+a§state n009 n010 0 0 0 active1 active2 0 srflop
+b§to2 n009 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active1),0)
+b§to1 n010 0 v=if(2*v(r)*sin(v(beta))>=10 ,v(active2),0)
 b§orient orient 0 v=v(active1)-v(active2)
 b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 0.00170380227750929 ,v(active2))
 b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,v(active1))
@@ -73,11 +73,11 @@ b§qr qr 0 v=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp)
 b§qe qe 0 v=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp)
 b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
 b§dyc dyc 0 v=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta)))
-b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/(v(r)+1e-5)*v(ramp)**2
-b§qr2 n003 pb2 i=v(active2)*v(qe)
-b§qe1 pb2 n010 i=v(active1)*v(qe)
-b§qe2 pb2 n003 i=v(active2)*v(qr)
-b§qr1 n010 pb2 i=v(active1)*v(qr)
+b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/(v(r)+1e-5)*v(ramp)**3
+b§qr2 pbubble2 pb2 i=v(active2)*v(qe)
+b§qe1 pb2 pbubble1 i=v(active1)*v(qe)
+b§qe2 pb2 pbubble2 i=v(active2)*v(qr)
+b§qr1 pbubble1 pb2 i=v(active1)*v(qr)
 b§pda pda 0 v=3444780952.60948 *0.75*i(rsupply)**2*(v(ts)+v(t)-(v(ts)**3+v(t)**3)/3)/ 3.45341893472363 *v(ramp)
 b§pdi pdi 0 v=3444780952.60948 *0.75*i(rsupply)**2*(2/3-v(ts)+v(ts)**3/3)/ 3.45341893472363 *v(ramp)
 b§pd2 pout2 pb2 v=v(pdi)
@@ -91,8 +91,6 @@ b§rc2 rc2 0 v=max(min(v(rc2d), 50.0151045615776),v(rcmin2))
 b§d1 d1 0 v=if(v(rc1)==v(rc1d), 1, v(d1_min))
 b§d2 d2 0 v=if(v(rc2)==v(rc2d), 1, v(d2_min))
 b1 probe 0 v=sqrt(10000 * 0.85 **2/ 3444780952.60948)
-v3 supply 0 -297
-r2 n005 supply 1
 b2 probe2 0 v=3444780952.60948 * 0.00170380227750929 
 cap pb2 0 2.0630085055943e-06 
 v§ramp ramp 0 1
@@ -111,7 +109,6 @@ WARNING: Less than two connections to node FSY.  This node is used by FSY.
 WARNING: Less than two connections to node VBUBBLE1.  This node is used by VBUBBLE1.
 WARNING: Less than two connections to node VBUBBLE2.  This node is used by VBUBBLE2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
-WARNING: Less than two connections to node N005.  This node is used by R2.
 WARNING: Less than two connections to node PROBE2.  This node is used by B2.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
@@ -132,23 +129,23 @@ Source Step = 3.0303%
 vernier = 0.25
 Source stepping failed
 
-Pseudo Transient succeeded in finding the operating point at 35.3701 s.
+Pseudo Transient succeeded in finding the operating point at 46.7884 s.
 
-Date: Mon Apr 13 18:15:43 2020
-Total elapsed time: 3.125 seconds.
+Date: Mon Apr 13 19:58:53 2020
+Total elapsed time: 3.190 seconds.
 
 tnom = 27
 temp = 27
 method = trap
-totiter = 65110
+totiter = 58675
 traniter = 0
 tranpoints = 0
 accept = 0
-rejected = 1522
-matrix size = 143
-fillins = 192
+rejected = 1378
+matrix size = 140
+fillins = 360
 solver = Alternate
-Thread vector: 38.8/8.9[4] 0.0/0.0[4] 2.0/1.5[3] 1.2/3.9[1]  2592/500
-Matrix Compiler1: 9.85 KB object code size  3.5/2.4/[1.2]
-Matrix Compiler2: 13.90 KB object code size  4.7/3.1/[1.2]
+Thread vector: 34.8/22.7[4] 0.0/0.0[4] 1.9/3.6[1] 1.1/10.7[1]  2592/500
+Matrix Compiler1: 19.53 KB object code size  5.8/2.9/[1.8]
+Matrix Compiler2: 17.39 KB object code size  3.6/9.3/[1.6]
 
