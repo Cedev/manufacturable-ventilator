@@ -49,7 +49,7 @@ b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
 b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
 b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
-b§v v 0 v=13.933319
+b§v v 0 v=max(10, v(vbubble1)) delay=0.00001
 b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
 b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
 b§wedge_area wedge_area 0 v=0.5*sin(v(beta))*(0.905 +0.5)*v(wedge_length)
@@ -97,7 +97,7 @@ v§ramp ramp 0 1
 b§lsp lsp 0 v=2*v(r)*sin(v(beta))
 b§v_min v_min 0 v=0.5*v(r_min)**2*(0.20944 +v(beta)+ 3.14159265358979)+v(wedge_area)-0.5*(v(r_min)-v(wedge_length))*v(r_min)*sin(0.20944 +v(beta)+ 3.14159265358979)
 b§r_min r_min 0 v=1.37429723596394 /(1+cos(0.20944 +v(beta)))+ 1e-05 
-.tran 50
+.tran 0.01
 .option noopiter
 .end
 
@@ -106,57 +106,184 @@ WARNING: Less than two connections to node QV1.  This node is used by QV1.
 WARNING: Less than two connections to node QV2.  This node is used by QV2.
 WARNING: Less than two connections to node QO1.  This node is used by QO1.
 WARNING: Less than two connections to node QO2.  This node is used by QO2.
-WARNING: Less than two connections to node VBUBBLE1.  This node is used by VBUBBLE1.
 WARNING: Less than two connections to node VBUBBLE2.  This node is used by VBUBBLE2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
 WARNING: Less than two connections to node PROBE2.  This node is used by B2.
 WARNING: Less than two connections to node V_MIN.  This node is used by V_MIN.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
-Increasing initial diagonal Gmin to 100
-Increasing initial diagonal Gmin to 1000
-Increasing initial diagonal Gmin to 10000
-Increasing initial diagonal Gmin to 100000
-Increasing initial diagonal Gmin to 1e+06
-Initial Gmin=1e+06 failed
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-05
+Gmin = 1.6455e-06
+Gmin = 1.76685e-07
+Gmin = 1.89714e-08
+Gmin = 2.03704e-09
+Gmin = 2.18725e-10
+Gmin = 2.34854e-11
+Gmin = 2.52173e-12
+Gmin = 2.70769e-13
+Singular matrix:  Check node r
+   Iteration No. 2
+Gmin = 0
+Singular matrix:  Check node r
+   Iteration No. 1
 Gmin stepping failed
 
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 vernier = 0.25
-Singular matrix:  Check nodes rc2#branch and rc2
-   Iteration No. 3
-Singular matrix:  Check nodes rc2#branch and rc2
-   Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
-   Iteration No. 1
 Source Step = 0.0177557%
-Singular matrix:  Check nodes rc2#branch and rc2
+Source Step = 0.0473485%
+Source Step = 0.0769413%
+Source Step = 0.106534%
+Source Step = 0.136127%
+vernier = 0.00146484
+Source Step = 0.170159%
+Source Step = 0.214548%
+Source Step = 0.258937%
+Source Step = 0.303326%
+Source Step = 0.347715%
+vernier = 0.00219727
+Source Step = 0.396544%
+Source Step = 0.463127%
+Source Step = 0.529711%
+Source Step = 0.596295%
+Source Step = 0.662879%
+vernier = 0.0032959
+Source Step = 0.732792%
+Source Step = 0.832667%
+Source Step = 0.932543%
+Source Step = 1.03242%
+Source Step = 1.13229%
+Source Step = 1.23217%
+vernier = 0.00494385
+Source Step = 1.38198%
+Source Step = 1.5318%
+Source Step = 1.68161%
+Source Step = 1.83142%
+Source Step = 1.98124%
+vernier = 0.00741577
+Source Step = 2.19847%
+Source Step = 2.42319%
+Source Step = 2.64791%
+Source Step = 2.87263%
+Source Step = 3.09735%
+vernier = 0.0111237
+Source Step = 3.41196%
+Source Step = 3.74904%
+Source Step = 4.08612%
+Source Step = 4.4232%
+Source Step = 4.76028%
+vernier = 0.0166855
+Source Step = 5.21534%
+Source Step = 5.72096%
+Source Step = 6.22658%
+Source Step = 6.7322%
+Source Step = 7.23782%
+vernier = 0.0250282
+Source Step = 7.89513%
+Source Step = 8.65356%
+Source Step = 9.41199%
+Source Step = 10.1704%
+Source Step = 10.9289%
+vernier = 0.0375423
+Source Step = 11.8769%
+Source Step = 13.0145%
+Source Step = 14.1522%
+Source Step = 15.2898%
+Source Step = 16.4275%
+vernier = 0.0563135
+Source Step = 17.7927%
+Source Step = 19.4991%
+Source Step = 21.2056%
+Source Step = 22.9121%
+Source Step = 24.6185%
+vernier = 0.0844703
+Source Step = 26.581%
+Source Step = 29.1407%
+Source Step = 31.7004%
+Source Step = 34.2601%
+Source Step = 36.8198%
+vernier = 0.126705
+Source Step = 39.6355%
+Source Step = 43.475%
+Source Step = 47.3146%
+Source Step = 51.1541%
+Source Step = 54.9937%
+vernier = 0.190058
+Source Step = 59.0252%
+Source Step = 64.7846%
+Source Step = 70.5439%
+Source Step = 76.3033%
+Source Step = 82.0626%
+Source Step = 87.8219%
+vernier = 0.285087
+Source Step = 96.4609%
+Singular matrix:  Check node r
+   Iteration No. 2
+Singular matrix:  Check node r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check node r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Source Step = 100%
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
    Iteration No. 1
 Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
+Source Step = 33.3333%
+Source Step = 63.6364%
+Source Step = 93.9394%
+Singular matrix:  Check node r
+   Iteration No. 2
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 1
 Source stepping failed
 
-Pseudo transient terminated at 100.285 s, solution accepted ready or not!
+Pseudo Transient succeeded in finding the operating point at 2.80616 s.
+Heightened Def Con from 9.76574e-10 to 1.97657e-09
 
-Date: Tue Apr 14 00:44:26 2020
-Total elapsed time: 8.624 seconds.
+Date: Tue Apr 14 08:43:51 2020
+Total elapsed time: 15.248 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 225742
-traniter = 3222
-tranpoints = 1104
-accept = 1089
-rejected = 5413
+totiter = 424151
+traniter = 14512
+tranpoints = 2996
+accept = 2426
+rejected = 10446
 matrix size = 146
-fillins = 488
+fillins = 850
 solver = Normal
-Thread vector: 27.4/8.3[4] 0.8/2.2[1] 1.9/2.2[1] 0.5/12.2[1]  2592/500
-Matrix Compiler1:    2412 opcodes  15.2/[8.2]/9.4
-Matrix Compiler2: off
+Thread vector: 34.2/8.9[4] 0.9/2.7[1] 56.6/37.4[4] 0.5/74.5[1]  2592/500
+Matrix Compiler1: 105.82 KB object code size  17.0/8.4/[6.3]
+Matrix Compiler2: 22.93 KB object code size  3.2/3.4/[1.2]
+
