@@ -1,12 +1,12 @@
 
    --- Expanded Deck Component Count ---
 A's 1
-B's 70
+B's 72
 C's 1
 L's 7
 R's 2
 V's 3
-tot: 84
+tot: 86
 
 
     --- Expanded Netlist ---
@@ -49,7 +49,7 @@ b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
 b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
 b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
-b§v v 0 v=13.933319 delay=0.00001
+b§v v 0 v=13.9
 b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
 b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
 b§wedge_area wedge_area 0 v=0.5*sin(v(beta))*(0.905 +0.5)*v(wedge_length)
@@ -67,17 +67,17 @@ a§state n009 n010 0 0 0 active1 active2 0 srflop
 b§to2 n009 0 v=if(v(lsp)>=10 ,v(active1),0)
 b§to1 n010 0 v=if(v(lsp)>=10 ,v(active2),0)
 b§orient orient 0 v=v(active1)-v(active2)
-b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 0.00170380227750929 ,13.9,v(active2))
+b§vbubble1 vbubble1 0 v=sdt(-i(bubble1), 5, v(active2))
 b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 0.00170380227750929 ,13.9,v(active1))
 b§qr qr 0 v=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp)
 b§qe qe 0 v=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp)
 b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
 b§dyc dyc 0 v=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta)))
 b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3
-b§qr2 pbubble2 pb2 i=v(active2)*v(qe)
-b§qe1 pb2 pbubble1 i=v(active1)*v(qe)
-b§qe2 pb2 pbubble2 i=v(active2)*v(qr)
-b§qr1 pbubble1 pb2 i=v(active1)*v(qr)
+b§qe2 pbubble2 pb2 i=v(active2)*v(qr)
+b§qr1 pb2 pbubble1 i=v(active1)*v(qr)
+b§qr2 pb2 pbubble2 i=v(active2)*v(qe)
+b§qe1 pbubble1 pb2 i=v(active1)*v(qe)
 b§pda pda 0 v=3444780952.60948 *0.75*i(rsupply)**2*(v(ts)+v(t)-(v(ts)**3+v(t)**3)/3)/ 3.45341893472363 *v(ramp)
 b§pdi pdi 0 v=3444780952.60948 *0.75*i(rsupply)**2*(2/3-v(ts)+v(ts)**3/3)/ 3.45341893472363 *v(ramp)
 b§pd2 pout2 pb2 v=v(pdi)
@@ -95,6 +95,8 @@ b2 probe2 0 v=3444780952.60948 * 0.00170380227750929
 cap pb2 0 2.0630085055943e-06 
 v§ramp ramp 0 1
 b§lsp lsp 0 v=2*v(r)*sin(v(beta))
+b§v_min v_min 0 v=0.5*v(r_min)**2*(0.20944 +v(beta)+ 3.14159265358979)+v(wedge_area)-0.5*(v(r_min)-v(wedge_length))*v(r_min)*sin(0.20944 +v(beta)+ 3.14159265358979)
+b§r_min r_min 0 v=1.37429723596394 /(1+cos(0.20944 +v(beta)))+ 1e-05 
 .tran 50
 .option noopiter
 .end
@@ -108,14 +110,29 @@ WARNING: Less than two connections to node VBUBBLE1.  This node is used by VBUBB
 WARNING: Less than two connections to node VBUBBLE2.  This node is used by VBUBBLE2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
 WARNING: Less than two connections to node PROBE2.  This node is used by B2.
+WARNING: Less than two connections to node V_MIN.  This node is used by V_MIN.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
-Increasing initial diagonal Gmin to 100
-Increasing initial diagonal Gmin to 1000
-Increasing initial diagonal Gmin to 10000
-Increasing initial diagonal Gmin to 100000
-Increasing initial diagonal Gmin to 1e+06
-Initial Gmin=1e+06 failed
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-05
+Gmin = 1.6455e-06
+Gmin = 1.76685e-07
+Gmin = 1.89714e-08
+Gmin = 2.03704e-09
+Gmin = 2.18725e-10
+Gmin = 2.34854e-11
+Gmin = 2.52173e-12
+Gmin = 2.70769e-13
+Singular matrix:  Check node r
+   Iteration No. 2
+Gmin = 0
+Singular matrix:  Check node r
+   Iteration No. 1
 Gmin stepping failed
 
 Starting source stepping with srcstepmethod=0
@@ -138,21 +155,22 @@ Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
 Source stepping failed
 
-Pseudo Transient succeeded in finding the operating point at 41.4833 s.
+Pseudo Transient succeeded in finding the operating point at 41.4766 s.
 
-Date: Mon Apr 13 22:19:13 2020
-Total elapsed time: 9.164 seconds.
+Date: Tue Apr 14 00:31:51 2020
+Total elapsed time: 11.442 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 196453
-traniter = 2498
+totiter = 195776
+traniter = 2210
 tranpoints = 1104
 accept = 1089
-rejected = 4875
-matrix size = 142
-fillins = 485
+rejected = 4880
+matrix size = 146
+fillins = 605
 solver = Normal
-Matrix Compiler1:    2296 opcodes  8.9/[6.5]/11.8
-Matrix Compiler2:    1244 opcodes
+Thread vector: 35.5/27.2[4] 1.5/24.4[1] 1.9/2.9[1] 0.5/41.6[1]  2592/500
+Matrix Compiler1:    3113 opcodes  13.7/[7.5]/8.8
+Matrix Compiler2:    1385 opcodes
