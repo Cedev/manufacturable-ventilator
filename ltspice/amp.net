@@ -1,7 +1,7 @@
 * C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\amp.asc
-V1 N005 0 {P0}
-Lsupply N005 N006 {2*LGTHS/(H0*AREAS)/CS*redim_dQdt} Rser=0
-Rsupply N006 Supply R=1/(CS**2)*absq2(i(Lsupply))
+V1 N006 0 {P0}
+Lsupply N006 N007 {2*LGTHS/(H0*AREAS)/CS*redim_dQdt} Rser=0
+Rsupply N007 Supply R=1/(CS**2)*absq2(i(Lsupply))
 V2 0 NC_01 PULSE(0 1000 .004 1.5e-3 1.5e-3 1)
 Lc1 0 N011 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D1)*x Rser=0
 Lc2 0 N001 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D2)*x Rser=0
@@ -33,7 +33,7 @@ Bubble1 N008 N010 V=v(Active1)*v(delpb)
 B§pc1 C1 N010 V=v(Active1)*v(delpb)/2
 B§pc2 C2 N003 V=v(Active2)*v(delpb)/2
 Bubble2 N008 N003 V=v(Active2)*v(delpb)
-B§psy N007 PB2 V=v(delpb)*3/4
+B§psy PB2 Supply V=v(delpb)*1/4
 BETA BETA 0 V=0.016
 B§length_past length_past 0 V=uramp(v(R)-v(R)*cos(v(BETA)-ALPH)-A2)
 B§area_past area_past 0 V=v(R)**2*acos((v(R)-v(length_past))/v(R))-(v(R)-v(length_past))*sqrt(2*v(R)*v(length_past)-v(length_past)**2)
@@ -48,7 +48,7 @@ B3 0 R I=v(R)+if(v(R) >= 0, v(bubble_area)-v(V), v(R)+6)
 B§TS TS 0 V=if(v(ZET) > pi/2 - v(theta) - ALPH, tanh(v(YS)*SIGMA/(v(SS)+SIGMA/3)), 1)
 B§ZET ZET 0 V=atan(v(R)*cos(v(BETA))/(SPL-v(R)*sin(v(BETA))))
 B§SS SS 0 V=v(R)*(v(BETA)-v(ZET)+pi/2)
-B§YS YS 0 V=sqrt((v(R)*cos(v(BETA)))**2+(SPL-(v(R)*sin(v(BETA)))**2))-v(R)
+B§YS YS 0 V=sqrt((v(R)*cos(v(BETA)))**2+(SPL-v(R)*sin(v(BETA)))**2)-v(R)
 B§T T 0 V=2*cos((2*pi-acos(-v(B)/2))/3)
 B B 0 V=1.5*(-v(TS)+(v(TS)**3/3)+2/3+(2/3+v(TS)-(v(TS)**3/3))*cos(v(THETA)))
 A§State N013 N014 0 0 0 Active1 Active2 0 SRFLOP
@@ -61,7 +61,7 @@ B§qr qr 0 V=0.5*i(Lsupply)*sqrt(A1*v(S1)+1)*(1-v(T))*v(Ramp)
 B§qe qe 0 V=0.5*i(Lsupply)*(sqrt(A1*v(S1)+1)-1)*v(Ramp)
 B§S1 S1 0 V=v(R)*(ALPH+v(BETA)+v(theta))
 B§DYC DYC 0 V=-v(R)*cos(v(BETA))+sqrt((cos(v(BETA))*v(R))**2-BC*BC+2*BC*v(R)*sin(v(BETA)))
-B§delpb delpb 0 V=2*redim_Q2*i(LSupply)**2/(v(R)+1e-5)*v(Ramp)
+B§delpb delpb 0 V=2*redim_Q2*i(LSupply)**2/(v(R)+1e-5)*v(Ramp)**2
 B§QR2 N003 PB2 I=v(Active2)*v(qe)
 B§QE1 PB2 N010 I=v(Active1)*v(qe)
 B§QE2 PB2 N003 I=v(Active2)*v(qr)
@@ -80,7 +80,7 @@ B§D1 D1 0 V=if(v(RC1)==v(RC1D), 1, v(D1_min))
 B§D2 D2 0 V=if(v(RC2)==v(RC2D), 1, v(D2_min))
 B1 probe 0 V=sqrt(P0*CS**2/redim_Q2)
 V3 Supply 0 -297
-R2 PB2 Supply 1
+R2 N005 Supply 1
 B2 probe2 0 V=redim_Q2*redim_Q
 Cap PB2 0 {sin(ALPH)*(LGTHS*B0)**2/100}
 V§Ramp Ramp 0 1
