@@ -13,12 +13,12 @@ TEXT -66 44 Left 2 radius
 PIN -96 0 LEFT 8
 PINATTR PinName alph
 PINATTR SpiceOrder 1
-PIN -96 -32 LEFT 8
-PINATTR PinName step
-PINATTR SpiceOrder 3
 PIN -96 -64 LEFT 8
 PINATTR PinName beta
 PINATTR SpiceOrder 2
+PIN -96 -32 LEFT 8
+PINATTR PinName step
+PINATTR SpiceOrder 3
 PIN 32 -64 TOP 8
 PINATTR PinName area
 PINATTR SpiceOrder 4

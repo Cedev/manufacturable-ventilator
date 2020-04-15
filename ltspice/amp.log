@@ -1,12 +1,14 @@
 
    --- Expanded Deck Component Count ---
 A's 1
-B's 73
+B's 71
 C's 1
+E's 5
+G's 4
 L's 7
-R's 3
-V's 3
-tot: 88
+R's 5
+V's 5
+tot: 99
 
 
     --- Expanded Netlist ---
@@ -47,16 +49,7 @@ b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
 bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
 b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
-b§length_past length_past 0 v=uramp(v(r)-v(r)*cos(v(beta)- 0.20944)- 1.37429723596394)
-b§area_past area_past 0 v=v(r)**2*acos((v(r)-v(length_past))/v(r))-(v(r)-v(length_past))*sqrt(2*v(r)*v(length_past)-v(length_past)**2)
-b§v v 0 v=max(9.8234375,i(rvbubble))
-b§wedge_length wedge_length 0 v=1.37429723596394 /cos(v(beta)+ 0.20944)
-b§theta theta 0 v=acos(cos(v(beta)+ 0.20944)- 1.37429723596394 /v(r))
-b§wedge_area wedge_area 0 v=0.5*sin(v(beta))*(0.905 +0.5)*v(wedge_length)
-b§outside_area outside_area 0 v=0.5*(v(r)-v(wedge_length))*v(r)*sin(0.20944 +v(beta)+v(theta))
-bubble_area bubble_area 0 v=0.5*v(r)**2*(0.20944 +v(beta)+v(theta))+v(wedge_area)-v(outside_area)-v(area_past)
-r1 r 0 1
-b3 0 r i=v(r)+if(v(r) >=0, v(bubble_area)-v(v), v(r)-6)
+b§v v 0 v=max(9.821875,i(rvbubble))
 b§ts ts 0 v=if(v(zet)> 3.14159265358979 /2-v(theta)- 0.20944 ,tanh(v(ys)* 10 /(v(ss)+ 10 /3)),1)
 b§zet zet 0 v=atan(v(r)*cos(v(beta))/(10 -v(r)*sin(v(beta))))
 b§ss ss 0 v=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2)
@@ -71,7 +64,6 @@ b§vbubble1 vbubble1 0 v=sdt(-i(bubble1)/ 2.7783e-08 ,5,v(active2))
 b§vbubble2 vbubble2 0 v=sdt(-i(bubble2)/ 2.7783e-08 ,13.9,v(active1))
 b§qr qr 0 v=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp)
 b§qe qe 0 v=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp)
-b§s1 s1 0 v=v(r)*(0.20944 +v(beta)+v(theta))
 b§dyc dyc 0 v=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta)))
 b§delpb delpb 0 v=2* 3444780952.60948 *i(lsupply)**2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3
 b§qe2 pbubble2 pb2 i=v(active2)*v(qr)
@@ -95,10 +87,31 @@ b2 probe2 0 v=3444780952.60948 * 0.00170380227750929
 cap pb2 0 2.0630085055943e-06 
 v§ramp ramp 0 1
 b§lsp lsp 0 v=2*v(r)*sin(v(beta))
-b§v_min v_min 0 v=0.5*v(r_min)**2*(0.20944 +v(beta)+ 3.14159265358979)+v(wedge_area)-0.5*(v(r_min)-v(wedge_length))*v(r_min)*sin(0.20944 +v(beta)+ 3.14159265358979)
-b§r_min r_min 0 v=1.37429723596394 /(1+cos(0.20944 +v(beta)))+ 1e-05 
 b§vbubble 0 n011 i=max(7, v(vbubble1))
 rvbubble n011 0 1
+v§step n012 0 1.405 
+v§alph n013 0 0.20944 
+b:x1:length_past x1:length_past 0 v=v(r)-v(r)*cos(v(beta)-v(n013))-v(n012)*cos(v(n013))
+b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n013))*v(n012)*v(nc_05)
+b:x1:curved_area x1:n004 0 v=0.5*v(r)**2*(v(x1:omega)-sin(v(x1:omega)))
+b:x1:x1:theta 0 x1:nc_02 i=2*acos(v(x1:nc_01)/v(r)) rpar=1
+b:x1:x1:a 0 x1:area_past i=0.5*v(r)**2*(v(x1:nc_02) - sin(v(x1:nc_02))) rpar=1
+e:x1:x1:r x1:nc_01 0 r x1:length_past 1
+b:x1:arc 0 s1 i=v(r)*(v(x1:omega)) rpar=1
+e:x1:alph x1:n001 0 n013 0 1
+e:x1:gamma x1:gamma x1:n001 beta 0 1
+g:x1:r 0 r r 0 1
+r:x1:r r 0 1
+g:x1:error 0 r x1:bubble_area x1:n002 1
+b:x1:theta 0 theta i=acos(cos(v(x1:gamma))-v(n012)*cos(v(n013))/v(r)) rpar=1
+e:x1:omega x1:omega x1:gamma theta 0 1
+e:x1:area_past x1:bubble_area x1:n003 0 x1:area_past 1
+g:x1:x2:x1:1 0 x1:x2:nc_01 n012 0 1
+r:x1:x2:x1:1 x1:x2:nc_01 0 1
+b:x1:x 0 nc_05 i=cos(v(beta)-v(x1:omega)/2)*v(n012)/sin(v(x1:omega)/2-v(x1:gamma)) rpar=1
+g:x1:x3:x1:1 0 x1:x3:nc_01 v 0 1
+r:x1:x3:x1:1 x1:x3:nc_01 0 1
+b:x1:area x1:n002 0 v=uramp(v(v))
 .tran 0.01
 .option noopiter
 .end
@@ -111,7 +124,6 @@ WARNING: Less than two connections to node QO2.  This node is used by QO2.
 WARNING: Less than two connections to node VBUBBLE2.  This node is used by VBUBBLE2.
 WARNING: Less than two connections to node PROBE.  This node is used by B1.
 WARNING: Less than two connections to node PROBE2.  This node is used by B2.
-WARNING: Less than two connections to node V_MIN.  This node is used by V_MIN.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
 Gmin = 10
@@ -129,10 +141,10 @@ Gmin = 2.18725e-10
 Gmin = 2.34854e-11
 Gmin = 2.52173e-12
 Gmin = 2.70769e-13
-Singular matrix:  Check node r
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 2
 Gmin = 0
-Singular matrix:  Check node r
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
 Gmin stepping failed
 
@@ -155,27 +167,33 @@ Singular matrix:  Check nodes rc2#branch and rc2
 Singular matrix:  Check nodes rc2#branch and rc2
    Iteration No. 1
 Starting source stepping with srcstepmethod=1
-Source Step = 3.0303%
-Singular matrix:  Check nodes rc2#branch and rc2
-   Iteration No. 3
-Source stepping failed
+Singular matrix:  Check node r
+   Iteration No. 1
+Singular matrix:  Check node r
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 6.07402 s.
+Trouble finding operating point....skipping operating point for Transient analysis.
+Ignoring empty pin current: Ix(x1:alph)
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:area)
 
-Pseudo Transient succeeded in finding the operating point at 2.80611 s.
-
-Date: Tue Apr 14 09:25:44 2020
-Total elapsed time: 14.968 seconds.
+Date: Tue Apr 14 22:21:03 2020
+Total elapsed time: 44.694 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 422468
-traniter = 16487
-tranpoints = 3079
-accept = 2490
-rejected = 10458
-matrix size = 147
-fillins = 582
+totiter = 1637616
+traniter = 0
+tranpoints = 1
+accept = 1
+rejected = 40683
+matrix size = 156
+fillins = 640
 solver = Normal
-Thread vector: 31.5/24.7[4] 1.4/3.5[1] 4.2/3.0[3] 0.4/5.3[1]  2592/500
-Matrix Compiler1:    2818 opcodes  24.5/[10.4]/18.5
-Matrix Compiler2: off
+Thread vector: 122.3/98.2[4] 1.4/1.8[1] 3.3/16.8[1] 0.5/17.4[1]  2592/500
+Matrix Compiler1: 53.91 KB object code size  24.8/11.1/[5.4]
+Matrix Compiler2: 20.37 KB object code size  2.7/3.9/[1.2]
+

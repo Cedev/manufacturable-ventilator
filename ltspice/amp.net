@@ -35,16 +35,7 @@ B§pc2 C2 PBubble2 V=v(Active2)*v(delpb)/2
 Bubble2 PB2 PBubble2 V=v(Active2)*v(delpb)
 B§psy PB2 Supply V=v(delpb)*1/4
 BETA BETA 0 V=atan(v(orient)*(v(FC1)-v(FC2))/eps(v(FSY)))
-B§length_past length_past 0 V=uramp(v(R)-v(R)*cos(v(BETA)-ALPH)-A2)
-B§area_past area_past 0 V=v(R)**2*acos((v(R)-v(length_past))/v(R))-(v(R)-v(length_past))*sqrt(2*v(R)*v(length_past)-v(length_past)**2)
-B§V V 0 V=max(9.8234375,i(RVBubble))
-B§wedge_length wedge_length 0 V=A2/cos(v(BETA)+ALPH)
-B§theta theta 0 V=acos(cos(v(BETA)+ALPH)-A2/v(r))
-B§wedge_area wedge_area 0 V=0.5*sin(v(BETA))*(D+0.5)*v(wedge_length)
-B§outside_area outside_area 0 V=0.5*(v(R)-v(wedge_length))*v(R)*sin(ALPH+v(BETA)+v(theta))
-bubble_area bubble_area 0 V=0.5*v(R)**2*(ALPH+v(BETA)+v(theta))+v(wedge_area)-v(outside_area)-v(area_past)
-R1 R 0 1
-B3 0 R I=v(R)+if(v(R) >= 0, v(bubble_area)-v(V), v(R)-6)
+B§V V 0 V=max(9.821875,i(RVBubble))
 B§TS TS 0 V=if(v(ZET) > pi/2 - v(theta) - ALPH, tanh(v(YS)*SIGMA/(v(SS)+SIGMA/3)), 1)
 B§ZET ZET 0 V=atan(v(R)*cos(v(BETA))/(SPL-v(R)*sin(v(BETA))))
 B§SS SS 0 V=v(R)*(v(BETA)-v(ZET)+pi/2)
@@ -59,7 +50,6 @@ B§VBubble1 VBubble1 0 V=sdt(-i(Bubble1)/redim_V, 5, v(Active2))
 B§VBubble2 VBubble2 0 V=sdt(-i(Bubble2)/redim_V, 13.9, v(Active1))
 B§qr qr 0 V=0.5*i(Lsupply)*sqrt(A1*v(S1)+1)*(1-v(T))*v(Ramp)
 B§qe qe 0 V=0.5*i(Lsupply)*(sqrt(A1*v(S1)+1)-1)*v(Ramp)
-B§S1 S1 0 V=v(R)*(ALPH+v(BETA)+v(theta))
 B§DYC DYC 0 V=-v(R)*cos(v(BETA))+sqrt((cos(v(BETA))*v(R))**2-BC*BC+2*BC*v(R)*sin(v(BETA)))
 B§delpb delpb 0 V=2*redim_Q2*i(LSupply)**2/eps(v(R))*v(Ramp)**3
 B§QE2 PBubble2 PB2 I=v(Active2)*v(qr)
@@ -83,10 +73,48 @@ B2 probe2 0 V=redim_Q2*redim_Q
 Cap PB2 0 {sin(ALPH)*(LGTHS*B0)**2/100}
 V§Ramp Ramp 0 1
 B§LSP LSP 0 V=2*v(R)*sin(v(BETA))
-B§V_min V_min 0 V=0.5*v(R_min)**2*(ALPH+v(BETA)+pi) + v(wedge_area) - 0.5*(v(R_min)-v(wedge_length))*v(R_min)*sin(ALPH+v(BETA)+pi)
-B§R_min R_min 0 V=A2/(1+cos(ALPH+v(BETA)))+epsilon
 B§VBubble 0 N011 I=max(7, v(VBubble1))
 RVBubble N011 0 1
+V§STEP N012 0 {D+0.5}
+V§ALPH N013 0 {ALPH}
+XX1 N013 BETA N012 V R THETA S1 NC_05 bubble_volume
+
+* block symbol definitions
+.subckt bubble_volume alph beta step area r theta arc x
+Blength_past length_past 0 V=v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph))
+Btriangular_area N003 N004 V=0.5*cos(v(alph))*v(step)*v(x)
+Bcurved_area N004 0 V=0.5*v(r)**2*(v(omega)-sin(v(omega)))
+XX1 length_past r area_past NC_01 NC_02 chord
+Barc 0 arc I=v(r)*(v(omega)) rpar=1
+Ealph N001 0 alph 0 1
+Egamma gamma N001 beta 0 1
+Gr 0 r r 0 1
+Rr r 0 1
+Gerror 0 r bubble_area N002 1
+Btheta 0 theta I=acos(cos(v(gamma))-v(step)*cos(v(alph))/v(r)) rpar=1
+Eomega omega gamma theta 0 1
+Earea_past bubble_area N003 0 area_past 1
+XX2 step nc
+Bx 0 x I=cos(v(beta)-v(omega)/2)*v(step)/sin(v(omega)/2-v(gamma)) rpar=1
+XX3 area nc
+Barea N002 0 V=uramp(v(area))
+.ends bubble_volume
+
+.subckt chord h radius A r theta
+Btheta 0 theta I=2*acos(v(r)/v(radius)) rpar=1
+BA 0 A I=0.5*v(radius)**2*(v(theta) - sin(v(theta))) rpar=1
+Er r 0 radius h 1
+.ends chord
+
+.subckt nc x
+XX1 x NC_01 id
+.ends nc
+
+.subckt id x id_x
+G1 0 id_x x 0 1
+R1 id_x 0 1
+.ends id
+
 .param rho=1.2059 sigma=10 nu=1.4864e-5
 .tran 0.01
 .param D=0.905 B0=2.1e-3 BC=1 ALPH=.20944 XV1=8.640 LGTHC=10 AREAC=2 LGTHS=15 AREAS=3 LGTHV=10 AREAV=1.95 SPL=10 LGTHR=27.75 P0=10000 CS=0.85
