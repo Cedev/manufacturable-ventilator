@@ -2,8 +2,8 @@
 V1 N004 0 {P0}
 Lsupply N004 N005 {2*LGTHS/(H0*AREAS)/CS*redim_dQdt} Rser=0
 Rsupply N005 Supply R=1/(CS**2)*absq2(i(Lsupply))
-V2 N011 0 PULSE(0 1000 .004 1.5e-3 1.5e-3 1)
-Lc1 N011 N007 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D1)*x Rser=0
+V2 N009 0 PULSE(0 2000 .004 1.5e-3 1.5e-3 1)
+Lc1 N009 N007 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D1)*x Rser=0
 Lc2 0 N001 flux={2*LGTHC/(H0*AREAC)*redim_dQdt}/v(D2)*x Rser=0
 Rcontrol1 N007 C1 R=v(RC1)*absq2(i(Lc1))
 Rcontrol2 N001 C2 R=v(RC2)*absq2(i(Lc2))
@@ -42,12 +42,9 @@ B§SS SS 0 V=v(R)*(v(BETA)-v(ZET)+pi/2)
 B§YS YS 0 V=sqrt((v(R)*cos(v(BETA)))**2+(SPL-v(R)*sin(v(BETA)))**2)-v(R)
 B§T T 0 V=2*cos((2*pi-acos(-v(B)/2))/3)
 B B 0 V=1.5*(-v(TS)+(v(TS)**3/3)+2/3+(2/3+v(TS)-(v(TS)**3/3))*cos(v(THETA)))
-A§State N009 N010 0 0 0 Active1 Active2 0 SRFLOP
-B§To2 N009 0 V=if(v(LSP) >= SPL, v(Active1), 0)
-B§To1 N010 0 V=if(v(LSP) >= SPL, v(Active2), 0)
-B§orient orient 0 V=v(Active1)-v(Active2)
-B§VBubble1 VBubble1 0 V=sdt(-i(Bubble1)*0/redim_V, 5, v(Active2))
-B§VBubble2 VBubble2 0 V=sdt(i(Bubble2)/redim_V, 13.9, v(Active1))
+A§State N010 N011 0 0 0 Active1 Active2 0 SRFLOP
+B§To2 N010 0 V=if(v(LSP) >= SPL, v(Active1), 0)
+B§To1 N011 0 V=if(v(LSP) >= SPL, v(Active2), 0)
 B§qr qr 0 V=0.5*i(Lsupply)*sqrt(A1*v(S1)+1)*(1-v(T))*v(Ramp)
 B§qe qe 0 V=0.5*i(Lsupply)*(sqrt(A1*v(S1)+1)-1)*v(Ramp)
 B§DYC DYC 0 V=-v(R)*cos(v(BETA))+sqrt((cos(v(BETA))*v(R))**2-BC*BC+2*BC*v(R)*sin(v(BETA)))
@@ -68,19 +65,15 @@ B§RC1 RC1 0 V=max(min(v(RC1D), RCMAX), v(RCMIN1))
 B§RC2 RC2 0 V=max(min(v(RC2D), RCMAX), v(RCMIN2))
 B§D1 D1 0 V=if(v(RC1)==v(RC1D), 1, v(D1_min))
 B§D2 D2 0 V=if(v(RC2)==v(RC2D), 1, v(D2_min))
-B1 probe 0 V=atan(v(orient)*(v(FC1)-v(FC2))/v(FSY))
-B2 probe2 0 V=redim_Q2*redim_Q
-Cap PB2 0 {sin(ALPH)*(LGTHS*B0)**2/100}
+Cap PB2 0 {sin(ALPH)*(LGTHS*B0)**2/bulk_modulus}
 V§Ramp Ramp 0 1
 B§LSP LSP 0 V=2*v(R)*sin(v(BETA))
-XX1 N013 BETA N012 V R THETA S1 NC_04 bubble_volume
+XX1 N013 BETA N012 V R THETA S1 X bubble_volume
 B3 N013 0 V={ALPH}
 B4 N012 0 V={D+0.5}
-B§V3 N015 0 V=10.4522*v(Ramp)
-B§THETA N016 0 V=0.569584
-B§S1 N014 0 V=8.359
 C1 VBubble1Cap 0 {redim_V}
 F1 0 VBubble1Cap Bubble1 -1
+Eorient orient 0 Active1 Active2 1
 
 * block symbol definitions
 .subckt bubble_volume alph beta step area r theta arc x
@@ -134,5 +127,23 @@ R1 id_x 0 1
 .option noopiter
 .param epsilon=1e-5
 .func eps(y) {y + if(y>=0, 1, -1)*epsilon/(1+exp(abs(y)/10))}
+.param bulk_modulus=101
+* Device parameters
+* Calculated constants
+* Dimensioned quadratic flow resistance
+* Numeric precision and division by 0
+* Conversion from dimensionless quantities
+* Simulation
+* Capture the voltage ramp up during initialization
+* Amplifier
+* Bubble volume and jet geometry
+* Jet deflection
+* Dimensionless flows
+* Attachment state
+* Jet-splitter intersection
+* Entrained and returned flows
+* Pressure across jet
+* Pressure recovery at splitter
+* Control resistance and discharge coefficient
 .backanno
 .end
