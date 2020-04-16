@@ -35,7 +35,7 @@ B§pc2 C2 PBubble2 V=v(Active2)*v(delpb)/2
 Bubble2 PB2 PBubble2 V=v(Active2)*v(delpb)
 B§psy PB2 Supply V=v(delpb)*1/4
 BETA BETA 0 V=atan(v(orient)*(v(FC1)-v(FC2))/eps(v(FSY)))
-B§V V 0 V=max(9.821875,i(RVBubble))
+B§V V 0 V=max(9.823242188,i(RVBubble))*v(Ramp)
 B§TS TS 0 V=if(v(ZET) > pi/2 - v(theta) - ALPH, tanh(v(YS)*SIGMA/(v(SS)+SIGMA/3)), 1)
 B§ZET ZET 0 V=atan(v(R)*cos(v(BETA))/(SPL-v(R)*sin(v(BETA))))
 B§SS SS 0 V=v(R)*(v(BETA)-v(ZET)+pi/2)
@@ -75,9 +75,9 @@ V§Ramp Ramp 0 1
 B§LSP LSP 0 V=2*v(R)*sin(v(BETA))
 B§VBubble 0 N011 I=max(7, v(VBubble1))
 RVBubble N011 0 1
-V§STEP N012 0 {D+0.5}
-V§ALPH N013 0 {ALPH}
 XX1 N013 BETA N012 V R THETA S1 NC_05 bubble_volume
+B3 N013 0 V={ALPH}
+B4 N012 0 V={D+0.5}
 
 * block symbol definitions
 .subckt bubble_volume alph beta step area r theta arc x
@@ -116,7 +116,7 @@ R1 id_x 0 1
 .ends id
 
 .param rho=1.2059 sigma=10 nu=1.4864e-5
-.tran 0.01
+.op
 .param D=0.905 B0=2.1e-3 BC=1 ALPH=.20944 XV1=8.640 LGTHC=10 AREAC=2 LGTHS=15 AREAS=3 LGTHV=10 AREAV=1.95 SPL=10 LGTHR=27.75 P0=10000 CS=0.85
 .param H0=3*B0
 .param Qref=B0*sqrt(2*P0/rho) RE=Qref/nu

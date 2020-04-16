@@ -13,8 +13,8 @@ tot: 25
 vdplus n003 0 1.405
 valph n004 0 0.20944
 vbeta n002 0 0.0160524
-varea n001 0 13.933391
-b:x1:§length_past x1:length_past 0 v=v(r)-v(r)*cos(v(n002)-v(n004))-v(n003)*cos(v(n004))
+varea n001 0 13.921875
+b:x1:length_past x1:length_past 0 v=v(r)-v(r)*cos(v(n002)-v(n004))-v(n003)*cos(v(n004))
 b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n004))*v(n003)*v(x)
 b:x1:curved_area x1:n004 0 v=0.5*v(r)**2*(v(x1:omega)-sin(v(x1:omega)))
 b:x1:x1:theta 0 x1:nc_02 i=2*acos(v(x1:nc_01)/v(r)) rpar=1
@@ -35,7 +35,7 @@ b:x1:x 0 x i=cos(v(n002)-v(x1:omega)/2)*v(n003)/sin(v(x1:omega)/2-v(x1:gamma)) r
 g:x1:x3:x1:1 0 x1:x3:nc_01 n001 0 1
 r:x1:x3:x1:1 x1:x3:nc_01 0 1
 b:x1:area x1:n002 0 v=uramp(v(n001))
-.dc varea -2 20 0.1
+.op
 .end
 
 Ignoring empty pin current: Ix(x1:alph)
@@ -44,125 +44,46 @@ Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:area)
 Singular matrix:  Check node r
    Iteration No. 1
-Singular matrix:  Check node r
-   Iteration No. 1
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
-Increasing initial diagonal Gmin to 100
-Increasing initial diagonal Gmin to 1000
-Increasing initial diagonal Gmin to 10000
-Increasing initial diagonal Gmin to 100000
-Increasing initial diagonal Gmin to 1e+06
-Initial Gmin=1e+06 failed
-Gmin stepping failed
-
-Starting source stepping with srcstepmethod=0
-Source Step = 3.0303%
-vernier = 0.25
-Source Step = 0.0177557%
-Source Step = 0.0473485%
-Source Step = 0.0769413%
-Source Step = 0.106534%
-Source Step = 0.136127%
-vernier = 0.00146484
-Source Step = 0.171638%
-Source Step = 0.216027%
-Source Step = 0.260417%
-Source Step = 0.304806%
-Source Step = 0.349195%
-vernier = 0.00219727
-Source Step = 0.400243%
-Source Step = 0.466826%
-Source Step = 0.53341%
-Source Step = 0.599994%
-Source Step = 0.666578%
-vernier = 0.0032959
-Source Step = 0.73982%
-Source Step = 0.839696%
-Source Step = 0.939571%
-Source Step = 1.03945%
-Source Step = 1.13932%
-vernier = 0.00494385
-Source Step = 1.24419%
-Source Step = 1.39401%
-Source Step = 1.54382%
-Source Step = 1.69363%
-Source Step = 1.84345%
-Source Step = 1.99326%
-vernier = 0.00741577
-Source Step = 2.21798%
-Source Step = 2.4427%
-Source Step = 2.66742%
-Source Step = 2.89214%
-Source Step = 3.11686%
-vernier = 0.0111237
-Source Step = 3.44271%
-Source Step = 3.77979%
-Source Step = 4.11687%
-Source Step = 4.45395%
-Source Step = 4.79103%
-vernier = 0.0166855
-Source Step = 5.26294%
-Source Step = 5.76856%
-Source Step = 6.27418%
-Source Step = 6.7798%
-Source Step = 7.28542%
-vernier = 0.0250282
-Source Step = 7.96801%
-Source Step = 8.72644%
-Source Step = 9.48487%
-Source Step = 10.2433%
-Source Step = 11.0017%
-vernier = 0.0375423
-Source Step = 11.9877%
-Source Step = 13.1253%
-Source Step = 14.263%
-Source Step = 15.4006%
-Source Step = 16.5383%
-vernier = 0.0563135
-Source Step = 17.9603%
-Source Step = 19.6668%
-Source Step = 21.3733%
-Source Step = 23.0798%
-Source Step = 24.7862%
-vernier = 0.0844703
-Source Step = 26.834%
-Source Step = 29.3937%
-Source Step = 31.9534%
-Source Step = 34.5131%
-Source Step = 37.0728%
-vernier = 0.126705
-Source Step = 40.0165%
-Source Step = 43.856%
-Source Step = 47.6956%
-Source Step = 51.5351%
-Source Step = 55.3747%
-vernier = 0.190058
-Source Step = 59.5982%
-Source Step = 65.3576%
-Source Step = 71.1169%
-Source Step = 76.8762%
-Source Step = 82.6356%
-vernier = 0.285087
-Source Step = 88.6829%
-Source Step = 97.3219%
-Source Step = 99.9136%
-Source stepping succeeded in finding the operating point.
+Gmin = 10
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+vernier = 0.5
+vernier = 0.666667
+Gmin = 0.00463511
+vernier = 0.888888
+vernier = 1
+Gmin = 0.000653801
+Gmin = 7.02013e-05
+Gmin = 7.53781e-06
+Gmin = 8.09366e-07
+Gmin = 8.6905e-08
+Gmin = 9.33136e-09
+Gmin = 1.00195e-09
+Gmin = 1.07583e-10
+Gmin = 1.15517e-11
+Gmin = 1.24035e-12
+Gmin = 1.33182e-13
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
 
 
-Date: Tue Apr 14 21:42:35 2020
-Total elapsed time: 0.232 seconds.
+Date: Wed Apr 15 18:04:31 2020
+Total elapsed time: 0.073 seconds.
 
 tnom = 27
 temp = 27
 method = trap
-totiter = 4147
+totiter = 582
 traniter = 0
 tranpoints = 0
 accept = 0
 rejected = 0
 matrix size = 34
-fillins = 35
+fillins = 31
 solver = Normal
-Matrix Compiler1:      84 opcodes  0.3/0.2/[0.2]
-Matrix Compiler2: off
+Matrix Compiler1: 1.27 KB object code size
+Matrix Compiler2: 2.61 KB object code size  0.3/0.3/[0.2]
+

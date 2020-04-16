@@ -2,12 +2,12 @@
 VDplus N003 0 1.405
 Valph N004 0 0.20944
 VBeta N002 0 0.0160524
-Varea N001 0 13.933391
+Varea N001 0 13.921875
 XX1 N004 N002 N003 N001 R theta arc x bubble_volume
 
 * block symbol definitions
 .subckt bubble_volume alph beta step area r theta arc x
-B§length_past length_past 0 V=v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph))
+Blength_past length_past 0 V=v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph))
 Btriangular_area N003 N004 V=0.5*cos(v(alph))*v(step)*v(x)
 Bcurved_area N004 0 V=0.5*v(r)**2*(v(omega)-sin(v(omega)))
 XX1 length_past r area_past NC_01 NC_02 chord
@@ -41,6 +41,6 @@ G1 0 id_x x 0 1
 R1 id_x 0 1
 .ends id
 
-.dc Varea -2 20 0.1
+.op
 .backanno
 .end

@@ -1,13 +1,13 @@
 
    --- Expanded Deck Component Count ---
 A's 1
-B's 73
+B's 71
 C's 1
 E's 5
 G's 4
 L's 7
 R's 5
-V's 3
+V's 5
 tot: 99
 
 
@@ -49,7 +49,7 @@ b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
 bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
 b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
-b§v v 0 v=max(9.823242188,i(rvbubble))*v(ramp)
+b§v v 0 v=max(9.823242188,i(rvbubble))
 b§ts ts 0 v=if(v(zet)> 3.14159265358979 /2-v(theta)- 0.20944 ,tanh(v(ys)* 10 /(v(ss)+ 10 /3)),1)
 b§zet zet 0 v=atan(v(r)*cos(v(beta))/(10 -v(r)*sin(v(beta))))
 b§ss ss 0 v=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2)
@@ -89,6 +89,8 @@ v§ramp ramp 0 1
 b§lsp lsp 0 v=2*v(r)*sin(v(beta))
 b§vbubble 0 n011 i=max(7, v(vbubble1))
 rvbubble n011 0 1
+v§step n012 0 1.405 
+v§alph n013 0 0.20944 
 b:x1:length_past x1:length_past 0 v=v(r)-v(r)*cos(v(beta)-v(n013))-v(n012)*cos(v(n013))
 b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n013))*v(n012)*v(nc_05)
 b:x1:curved_area x1:n004 0 v=0.5*v(r)**2*(v(x1:omega)-sin(v(x1:omega)))
@@ -110,8 +112,6 @@ b:x1:x 0 nc_05 i=cos(v(beta)-v(x1:omega)/2)*v(n012)/sin(v(x1:omega)/2-v(x1:gamma
 g:x1:x3:x1:1 0 x1:x3:nc_01 v 0 1
 r:x1:x3:x1:1 x1:x3:nc_01 0 1
 b:x1:area x1:n002 0 v=uramp(v(v))
-b3 n013 0 v=0.20944 
-b4 n012 0 v=1.405 
 .op
 .option noopiter
 .end
@@ -131,25 +131,20 @@ Ignoring empty pin current: Ix(x1:area)
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
 Gmin = 10
-vernier = 0.5
-Gmin = 2.55711
-vernier = 0.666667
-vernier = 0.888888
-Gmin = 0.493704
-vernier = 1
-Gmin = 0.0567082
-Gmin = 0.006089
-Gmin = 0.000653801
-Gmin = 7.02013e-05
-Gmin = 7.53781e-06
-Gmin = 8.09366e-07
-Gmin = 8.6905e-08
-Gmin = 9.33136e-09
-Gmin = 1.00195e-09
-Gmin = 1.07583e-10
-Gmin = 1.15517e-11
-Gmin = 1.24035e-12
-Gmin = 1.33182e-13
+Gmin = 1.07374
+Gmin = 0.115292
+Gmin = 0.0123794
+Gmin = 0.00132923
+Gmin = 0.000142725
+Gmin = 1.5325e-05
+Gmin = 1.6455e-06
+Gmin = 1.76685e-07
+Gmin = 1.89714e-08
+Gmin = 2.03704e-09
+Gmin = 2.18725e-10
+Gmin = 2.34854e-11
+Gmin = 2.52173e-12
+Gmin = 2.70769e-13
 Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 2
 Gmin = 0
@@ -159,21 +154,35 @@ Gmin stepping failed
 
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
-vernier = 0.25
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes rc1#branch and rc1
    Iteration No. 3
-Singular matrix:  Check nodes rc2#branch and rc2
+Source Step = 33.3333%
+Source Step = 63.6364%
+Source Step = 93.9394%
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 2
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
-Source Step = 0.0177557%
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 1
+Source Step = 100%
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 1
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 1
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 1
+Singular matrix:  Check nodes e:x1:omega#branch and r
+   Iteration No. 1
+Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
 Starting source stepping with srcstepmethod=1
 Singular matrix:  Check node r
@@ -183,20 +192,21 @@ Singular matrix:  Check node r
 Could not converge to DC with sources off!
 Pseudo Transient succeeded in finding the operating point at 2.80611 s.
 
-Date: Wed Apr 15 19:24:06 2020
-Total elapsed time: 14.707 seconds.
+Date: Wed Apr 15 19:13:20 2020
+Total elapsed time: 15.449 seconds.
 
 tnom = 27
 temp = 27
 method = trap
-totiter = 407551
+totiter = 406274
 traniter = 0
 tranpoints = 0
 accept = 0
-rejected = 9870
+rejected = 9867
 matrix size = 156
-fillins = 787
+fillins = 661
 solver = Normal
-Thread vector: 37.4/19.4[3] 0.0/0.0[3] 21.3/9.8[3] 0.5/4.2[1]  2592/500
-Matrix Compiler1:    4246 opcodes  16.3/[8.1]/10.0
-Matrix Compiler2: off
+Thread vector: 34.3/22.7[4] 0.0/0.0[4] 1.6/7.3[1] 0.5/3.0[1]  2592/500
+Matrix Compiler1: off  [19.9]/38.2/49.3
+Matrix Compiler2: 20.64 KB object code size  2.7/3.0/[0.7]
+
