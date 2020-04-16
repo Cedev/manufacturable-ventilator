@@ -1,7 +1,7 @@
 
    --- Expanded Deck Component Count ---
 A's 1
-B's 67
+B's 77
 C's 2
 E's 6
 F's 1
@@ -9,7 +9,7 @@ G's 4
 L's 7
 R's 4
 V's 3
-tot: 95
+tot: 105
 
 
     --- Expanded Netlist ---
@@ -26,10 +26,10 @@ lo1 n006 0 11625.8475329975 rser=0
 lo2 n003 0 11625.8475329975 rser=0
 b§ro2 pout2 n003 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo2))), 0.00170380227750929 *0.0001))
 b§ro1 pout1 n006 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo1))), 0.00170380227750929 *0.0001))
-lv1 n008 0 7419.52820562042 rser=0
-lv2 n002 0 7419.52820562042 rser=0
-b§rv2 pbubble2 n002 r=0.262984878369494 *(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
-rv1 pbubble1 n008 5869225632576.65 
+lv1 n008 0 flux=7419.52820562042 *x rser=0
+lv2 n002 0 flux=7419.52820562042 *x rser=0
+b§rv2 pbubble2 n002 r=v(rv2)*(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
+b§rv1 pbubble1 n008 r=5869225632576.65 *(3444780952.60948 *max(abs((i(lv1))), 0.00170380227750929 *0.0001))
 b§qs qs 0 v=i(lsupply)/ 0.00170380227750929 
 b§qc1 qc1 0 v=i(lc1)/ 0.00170380227750929 
 b§qc2 qc2 0 v=i(lc2)/ 0.00170380227750929 
@@ -50,7 +50,7 @@ b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
 bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
 b§psy pb2 supply v=v(delpb)*1/4
 beta beta 0 v=atan(v(orient)*(v(fc1)-v(fc2))/((v(fsy))+if((v(fsy))>=0,1,-1)* 1e-05 /(1+exp(abs((v(fsy)))/10))))
-b§v v 0 v=v(vbubble1cap)
+b§v v 0 v=max(v(vbubble1cap), 1e-05)
 b§ts ts 0 v=if(v(zet)> 3.14159265358979 /2-v(theta)- 0.20944 ,tanh(v(ys)* 10 /(v(ss)+ 10 /3)),1)
 b§zet zet 0 v=atan(v(r)*cos(v(beta))/(10 -v(r)*sin(v(beta))))
 b§ss ss 0 v=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2)
@@ -84,7 +84,7 @@ cap pb2 0 2.04258267880624e-06
 v§ramp ramp 0 1
 b§lsp lsp 0 v=2*v(r)*sin(v(beta))
 b:x1:length_past x1:length_past 0 v=v(r)-v(r)*cos(v(beta)-v(n013))-v(n012)*cos(v(n013))
-b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n013))*v(n012)*v(x)
+b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n013))*v(n012)*v(xcl)
 b:x1:curved_area x1:n004 0 v=0.5*v(r)**2*(v(x1:omega)-sin(v(x1:omega)))
 b:x1:x1:theta 0 x1:nc_02 i=2*acos(v(x1:nc_01)/v(r)) rpar=1
 b:x1:x1:a 0 x1:area_past i=0.5*v(r)**2*(v(x1:nc_02) - sin(v(x1:nc_02))) rpar=1
@@ -100,7 +100,7 @@ e:x1:omega x1:omega x1:gamma theta 0 1
 e:x1:area_past x1:bubble_area x1:n003 0 x1:area_past 1
 g:x1:x2:x1:1 0 x1:x2:nc_01 n012 0 1
 r:x1:x2:x1:1 x1:x2:nc_01 0 1
-b:x1:x 0 x i=cos(v(beta)-v(x1:omega)/2)*v(n012)/sin(v(x1:omega)/2-v(x1:gamma)) rpar=1
+b:x1:x 0 xcl i=cos(v(beta)-v(x1:omega)/2)*v(n012)/sin(v(x1:omega)/2-v(x1:gamma)) rpar=1
 g:x1:x3:x1:1 0 x1:x3:nc_01 v 0 1
 r:x1:x3:x1:1 x1:x3:nc_01 0 1
 b:x1:area x1:n002 0 v=uramp(v(v))
@@ -109,16 +109,25 @@ b4 n012 0 v=1.405
 c1 vbubble1cap 0 2.7783e-08 
 f1 0 vbubble1cap bubble1 -1
 eorient orient 0 active1 active2 1
+b§zeta zeta 0 v=atan((8.64 *cos(0.20944)-v(r)*sin(v(beta)))/(v(r)*cos(v(beta))- 0.905 -0.5- 8.64 *sin(0.20944)))
+b§sv sv 0 v=v(r)*(v(beta)+v(zeta))
+b§yv yv 0 v=v(y1)*(0.3 *v(sv)+1)/(0.3 *v(s1)+1)
+b§y1 y1 0 v=(0.3 *v(s1)+1)/6*log((1+v(t))/(1-v(t)))
+b§dv dv 0 v=if(v(xap)> 8.64 ,v(r)-v(yv)-(8.64 *cos(0.20944)-v(r)*sin(v(beta)))/sin(v(zeta)),0)
+b§rva rva 0 v=if(v(xap)- 8.64 < 1.95 ,1/((v(dv)**2)+if((v(dv)**2)>=0,1,-1)* 1e-05 /(1+exp(abs((v(dv)**2))/10))),1/ 1.95 **2)
+brv1 rv1 0 v=v(active1)*v(rva)+v(active2)* 0.262984878369494 
+brv2 rv2 0 v=v(active2)*v(rva)+v(active1)* 0.262984878369494 
+b§xap xap 0 v=v(xcl)-v(y1)/((sin(v(theta)))+if((sin(v(theta)))>=0,1,-1)* 1e-05 /(1+exp(abs((sin(v(theta))))/10)))
+r1 vbubble1cap 0 10g
 .tran 0.04
 .option noopiter
 .end
-
-ERROR: Node VBUBBLE1CAP is floating and connected to current source F1
 
 WARNING: Less than two connections to node QV1.  This node is used by QV1.
 WARNING: Less than two connections to node QV2.  This node is used by QV2.
 WARNING: Less than two connections to node QO1.  This node is used by QO1.
 WARNING: Less than two connections to node QO2.  This node is used by QO2.
+WARNING: Less than two connections to node RV1.  This node is used by BRV1.
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
 Gmin = 10
@@ -146,108 +155,104 @@ Gmin stepping failed
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 vernier = 0.25
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 3
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
 Source Step = 0.0177557%
+Singular matrix:  Check nodes rc2#branch and rc2
+   Iteration No. 1
 Source Step = 0.0473485%
 Source Step = 0.0769413%
 Source Step = 0.106534%
 Source Step = 0.136127%
+Source Step = 0.16572%
 vernier = 0.00146484
-Source Step = 0.170159%
-Source Step = 0.214548%
-Source Step = 0.258937%
-Source Step = 0.303326%
-Source Step = 0.347715%
+Source Step = 0.208629%
+Source Step = 0.253018%
+Source Step = 0.297408%
+Source Step = 0.341797%
+Source Step = 0.386186%
 vernier = 0.00219727
-Source Step = 0.396544%
-Source Step = 0.463127%
-Source Step = 0.529711%
-Source Step = 0.596295%
-Source Step = 0.662879%
+Source Step = 0.448331%
+Source Step = 0.514915%
+Source Step = 0.581499%
+Source Step = 0.648082%
+Source Step = 0.714666%
 vernier = 0.0032959
-Source Step = 0.732792%
-Source Step = 0.832667%
-Source Step = 0.932543%
-Source Step = 1.03242%
-Source Step = 1.13229%
-Source Step = 1.23217%
+Source Step = 0.804554%
+Source Step = 0.90443%
+Source Step = 1.00431%
+Source Step = 1.10418%
+Source Step = 1.20406%
 vernier = 0.00494385
-Source Step = 1.38198%
-Source Step = 1.5318%
-Source Step = 1.68161%
-Source Step = 1.83142%
-Source Step = 1.98124%
+Source Step = 1.3339%
+Source Step = 1.48371%
+Source Step = 1.63352%
+Source Step = 1.78334%
+Source Step = 1.93315%
 vernier = 0.00741577
-Source Step = 2.19847%
-Source Step = 2.42319%
-Source Step = 2.64791%
-Source Step = 2.87263%
-Source Step = 3.09735%
+Source Step = 2.12042%
+Source Step = 2.34514%
+Source Step = 2.56986%
+Source Step = 2.79458%
+Source Step = 3.0193%
 vernier = 0.0111237
-Source Step = 3.41196%
-Source Step = 3.74904%
-Source Step = 4.08612%
-Source Step = 4.4232%
-Source Step = 4.76028%
+Source Step = 3.28896%
+Source Step = 3.62604%
+Source Step = 3.96312%
+Source Step = 4.3002%
+Source Step = 4.63728%
 vernier = 0.0166855
-Source Step = 5.21534%
-Source Step = 5.72096%
-Source Step = 6.22658%
-Source Step = 6.7322%
-Source Step = 7.23782%
+Source Step = 5.02493%
+Source Step = 5.53055%
+Source Step = 6.03617%
+Source Step = 6.54179%
+Source Step = 7.04741%
 vernier = 0.0250282
-Source Step = 7.89513%
-Source Step = 8.65356%
-Source Step = 9.41199%
-Source Step = 10.1704%
-Source Step = 10.9289%
+Source Step = 7.60359%
+Source Step = 8.36202%
+Source Step = 9.12046%
+Source Step = 9.87889%
+Source Step = 10.6373%
 vernier = 0.0375423
-Source Step = 11.8769%
-Source Step = 13.0145%
-Source Step = 14.1522%
-Source Step = 15.2898%
-Source Step = 16.4275%
+Source Step = 11.4337%
+Source Step = 12.5713%
+Source Step = 13.709%
+Source Step = 14.8466%
+Source Step = 15.9843%
+Source Step = 17.1219%
 vernier = 0.0563135
-Source Step = 17.7927%
-Source Step = 19.4991%
-Source Step = 21.2056%
-Source Step = 22.9121%
-Source Step = 24.6185%
+Source Step = 18.8284%
+Source Step = 20.5348%
+Source Step = 22.2413%
+Source Step = 23.9478%
+Source Step = 25.6543%
 vernier = 0.0844703
-Source Step = 26.581%
-Source Step = 29.1407%
-Source Step = 31.7004%
-Source Step = 34.2601%
-Source Step = 36.8198%
+Source Step = 28.1286%
+Source Step = 30.6883%
+Source Step = 33.248%
+Source Step = 35.8078%
+Source Step = 38.3675%
 vernier = 0.126705
-Source Step = 39.6355%
-Source Step = 43.475%
-Source Step = 47.3146%
-Source Step = 51.1541%
-Source Step = 54.9937%
+Source Step = 41.951%
+Source Step = 45.7906%
+Source Step = 49.6302%
+Source Step = 53.4697%
+Source Step = 57.3093%
 vernier = 0.190058
-Source Step = 59.0252%
-Source Step = 64.7846%
-Source Step = 70.5439%
-Source Step = 76.3033%
-Source Step = 82.0626%
-Source Step = 87.8219%
+Source Step = 62.4927%
+Source Step = 68.252%
+Source Step = 74.0114%
+Source Step = 79.7707%
+Source Step = 85.53%
 vernier = 0.285087
-Source Step = 96.4609%
+Source Step = 93.0172%
 Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 2
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
 Source Step = 100%
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
 Singular matrix:  Check nodes e:x1:omega#branch and r
    Iteration No. 1
 Singular matrix:  Check nodes e:x1:omega#branch and r
@@ -268,7 +273,7 @@ Singular matrix:  Check node r
 Singular matrix:  Check node r
    Iteration No. 2
 Could not converge to DC with sources off!
-Pseudo Transient succeeded in finding the operating point at 61.4719 s.
+Pseudo Transient succeeded in finding the operating point at 38.1349 s.
 Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
@@ -277,22 +282,21 @@ Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:area)
-Heightened Def Con from 3.90625e-09 to 5.90625e-09
 
-Date: Thu Apr 16 08:36:55 2020
-Total elapsed time: 13.714 seconds.
+Date: Thu Apr 16 16:52:02 2020
+Total elapsed time: 15.396 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 262849
-traniter = 64162
-tranpoints = 10160
-accept = 7826
-rejected = 7081
-matrix size = 148
-fillins = 975
+totiter = 313967
+traniter = 70678
+tranpoints = 10152
+accept = 7827
+rejected = 8147
+matrix size = 166
+fillins = 899
 solver = Normal
-Thread vector: 30.8/22.4[4] 1.5/3.0[1] 3.8/3.3[2] 0.5/2.8[1]  2592/500
-Matrix Compiler1:    6445 opcodes  69.2/[35.6]/33.5
-Matrix Compiler2: off
+Thread vector: 40.8/26.2[4] 0.9/12.0[1] 8.2/4.8[4] 1.0/2.5[1]  2592/500
+Matrix Compiler1:    4861 opcodes  18.4/[6.1]/7.8
+Matrix Compiler2:    1797 opcodes
