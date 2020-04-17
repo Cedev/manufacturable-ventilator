@@ -14,9 +14,8 @@ XX1 length_past r area_past NC_01 NC_02 chord
 Barc 0 arc I=v(r)*(v(omega)) rpar=1
 Ealph N001 0 alph 0 1
 Egamma gamma N001 beta 0 1
-Gr 0 r_solved r_solved 0 1
-Rr r_solved 0 1
-Gerror 0 r_solved bubble_area N002 1
+Rr error 0 1
+Gerror 0 error bubble_area N002 1
 Btheta 0 theta I=acos(cos(v(gamma))-v(step)*cos(v(alph))/v(r)) rpar=1
 Eomega omega gamma theta 0 1
 Earea_past bubble_area N003 0 area_past 1
@@ -24,7 +23,7 @@ XX2 step nc
 Bx 0 x I=cos(v(beta)-v(omega)/2)*v(step)/sin(v(omega)/2-v(gamma)) rpar=1
 XX3 area nc
 Barea N002 0 V=uramp(v(area))
-Br 0 r I=abs(v(r_solved)) rpar=1
+Br 0 r I=abs(v(r)) + v(error)**2 rpar=1
 .ends bubble_volume
 
 .subckt chord h radius A r theta
