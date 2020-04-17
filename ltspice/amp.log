@@ -27,7 +27,7 @@ lo2 n003 0 11625.8475329975 rser=0
 b§ro2 pout2 n003 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo2))), 0.00170380227750929 *0.0001))
 b§ro1 pout1 n006 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo1))), 0.00170380227750929 *0.0001))
 lv1 n008 0 flux=7419.52820562042 *x rser=0
-lv2 n002 0 flux=7419.52820562042 *x rser=0
+lv2 n002 0 flux=14468.0800009598 /sqrt(v(rv2))*x rser=0
 b§rv2 pbubble2 n002 r=v(rv2)*(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
 b§rv1 pbubble1 n008 r=5869225632576.65 *(3444780952.60948 *max(abs((i(lv1))), 0.00170380227750929 *0.0001))
 b§qs qs 0 v=i(lsupply)/ 0.00170380227750929 
@@ -155,117 +155,18 @@ Gmin stepping failed
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 vernier = 0.25
-Singular matrix:  Check nodes rc2#branch and rc2
-   Iteration No. 3
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes v§ramp#branch and r
+   Iteration No. 4
+Singular matrix:  Check nodes v§ramp#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes v§ramp#branch and r
    Iteration No. 1
 Source Step = 0.0177557%
-Singular matrix:  Check nodes rc2#branch and rc2
+Singular matrix:  Check nodes v§ramp#branch and r
    Iteration No. 1
-Source Step = 0.0473485%
-Source Step = 0.0769413%
-Source Step = 0.106534%
-Source Step = 0.136127%
-Source Step = 0.16572%
-vernier = 0.00146484
-Source Step = 0.208629%
-Source Step = 0.253018%
-Source Step = 0.297408%
-Source Step = 0.341797%
-Source Step = 0.386186%
-vernier = 0.00219727
-Source Step = 0.448331%
-Source Step = 0.514915%
-Source Step = 0.581499%
-Source Step = 0.648082%
-Source Step = 0.714666%
-vernier = 0.0032959
-Source Step = 0.804554%
-Source Step = 0.90443%
-Source Step = 1.00431%
-Source Step = 1.10418%
-Source Step = 1.20406%
-vernier = 0.00494385
-Source Step = 1.3339%
-Source Step = 1.48371%
-Source Step = 1.63352%
-Source Step = 1.78334%
-Source Step = 1.93315%
-vernier = 0.00741577
-Source Step = 2.12042%
-Source Step = 2.34514%
-Source Step = 2.56986%
-Source Step = 2.79458%
-Source Step = 3.0193%
-vernier = 0.0111237
-Source Step = 3.28896%
-Source Step = 3.62604%
-Source Step = 3.96312%
-Source Step = 4.3002%
-Source Step = 4.63728%
-vernier = 0.0166855
-Source Step = 5.02493%
-Source Step = 5.53055%
-Source Step = 6.03617%
-Source Step = 6.54179%
-Source Step = 7.04741%
-vernier = 0.0250282
-Source Step = 7.60359%
-Source Step = 8.36202%
-Source Step = 9.12046%
-Source Step = 9.87889%
-Source Step = 10.6373%
-vernier = 0.0375423
-Source Step = 11.4337%
-Source Step = 12.5713%
-Source Step = 13.709%
-Source Step = 14.8466%
-Source Step = 15.9843%
-Source Step = 17.1219%
-vernier = 0.0563135
-Source Step = 18.8284%
-Source Step = 20.5348%
-Source Step = 22.2413%
-Source Step = 23.9478%
-Source Step = 25.6543%
-vernier = 0.0844703
-Source Step = 28.1286%
-Source Step = 30.6883%
-Source Step = 33.248%
-Source Step = 35.8078%
-Source Step = 38.3675%
-vernier = 0.126705
-Source Step = 41.951%
-Source Step = 45.7906%
-Source Step = 49.6302%
-Source Step = 53.4697%
-Source Step = 57.3093%
-vernier = 0.190058
-Source Step = 62.4927%
-Source Step = 68.252%
-Source Step = 74.0114%
-Source Step = 79.7707%
-Source Step = 85.53%
-vernier = 0.285087
-Source Step = 93.0172%
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 2
-Source Step = 100%
-Singular matrix:  Check nodes e:x1:omega#branch and r
+Singular matrix:  Check nodes v§ramp#branch and r
    Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
-   Iteration No. 1
-Singular matrix:  Check nodes e:x1:omega#branch and r
+Singular matrix:  Check nodes v§ramp#branch and r
    Iteration No. 1
 Starting source stepping with srcstepmethod=1
 Singular matrix:  Check node r
@@ -273,7 +174,7 @@ Singular matrix:  Check node r
 Singular matrix:  Check node r
    Iteration No. 2
 Could not converge to DC with sources off!
-Pseudo Transient succeeded in finding the operating point at 38.1349 s.
+Pseudo Transient succeeded in finding the operating point at 47.9706 s.
 Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
@@ -282,21 +183,24 @@ Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:area)
+Heightened Def Con from 7.86114e-09 +to 7.98614e-09
+Heightened Def Con from 8.23617e-09 to 9.23617e-09
 
-Date: Thu Apr 16 16:52:02 2020
-Total elapsed time: 15.396 seconds.
+Date: Thu Apr 16 19:17:22 2020
+Total elapsed time: 14.615 seconds.
 
 tnom = 27
 temp = 27
 method = modified trap
-totiter = 313967
-traniter = 70678
-tranpoints = 10152
-accept = 7827
-rejected = 8147
+totiter = 260855
+traniter = 71186
+tranpoints = 10200
+accept = 7841
+rejected = 6842
 matrix size = 166
-fillins = 899
+fillins = 1041
 solver = Normal
-Thread vector: 40.8/26.2[4] 0.9/12.0[1] 8.2/4.8[4] 1.0/2.5[1]  2592/500
-Matrix Compiler1:    4861 opcodes  18.4/[6.1]/7.8
-Matrix Compiler2:    1797 opcodes
+Thread vector: 53.0/17.0[4] 0.8/2.5[1] 4.6/2.5[4] 0.7/1329.1[1]  2592/500
+Matrix Compiler1: 133.04 KB object code size  24.3/12.1/[4.2]
+Matrix Compiler2: 27.67 KB object code size  5.5/85.7/[1.3]
+
