@@ -1,11 +1,11 @@
 
    --- Expanded Deck Component Count ---
-B's 9
+B's 10
 E's 5
 G's 4
 R's 3
 V's 4
-tot: 25
+tot: 26
 
 
     --- Expanded Netlist ---
@@ -14,7 +14,7 @@ vdplus n003 0 1.405
 valph n004 0 0.20944
 vbeta n002 0 0.0160524
 varea n001 0 13.921875
-b:x1:length_past x1:length_past 0 v=v(r)-v(r)*cos(v(n002)-v(n004))-v(n003)*cos(v(n004))
+b:x1:length_past x1:length_past 0 v=if(v(n002) > 0, v(r)-v(r)*cos(v(n002)-v(n004))-v(n003)*cos(v(n004)), 0)
 b:x1:triangular_area x1:n003 x1:n004 v=0.5*cos(v(n004))*v(n003)*v(x)
 b:x1:curved_area x1:n004 0 v=0.5*v(r)**2*(v(x1:omega)-sin(v(x1:omega)))
 b:x1:x1:theta 0 x1:nc_02 i=2*acos(v(x1:nc_01)/v(r)) rpar=1
@@ -23,9 +23,9 @@ e:x1:x1:r x1:nc_01 0 r x1:length_past 1
 b:x1:arc 0 arc i=v(r)*(v(x1:omega)) rpar=1
 e:x1:alph x1:n001 0 n004 0 1
 e:x1:gamma x1:gamma x1:n001 n002 0 1
-g:x1:r 0 r r 0 1
-r:x1:r r 0 1
-g:x1:error 0 r x1:bubble_area x1:n002 1
+g:x1:r 0 x1:r_solved x1:r_solved 0 1
+r:x1:r x1:r_solved 0 1
+g:x1:error 0 x1:r_solved x1:bubble_area x1:n002 1
 b:x1:theta 0 theta i=acos(cos(v(x1:gamma))-v(n003)*cos(v(n004))/v(r)) rpar=1
 e:x1:omega x1:omega x1:gamma theta 0 1
 e:x1:area_past x1:bubble_area x1:n003 0 x1:area_past 1
@@ -35,55 +35,3542 @@ b:x1:x 0 x i=cos(v(n002)-v(x1:omega)/2)*v(n003)/sin(v(x1:omega)/2-v(x1:gamma)) r
 g:x1:x3:x1:1 0 x1:x3:nc_01 n001 0 1
 r:x1:x3:x1:1 x1:x3:nc_01 0 1
 b:x1:area x1:n002 0 v=uramp(v(n001))
-.op
+b:x1:r 0 r i=abs(v(x1:r_solved)) rpar=1
+.dc varea -2 100 0.1 vbeta -0.2 0.2 .01
 .end
 
 Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:area)
-Singular matrix:  Check node r
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
    Iteration No. 1
 Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
 Starting Gmin stepping
-Gmin = 10
-Gmin = 1.07374
-Gmin = 0.115292
-Gmin = 0.0123794
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
 vernier = 0.5
-vernier = 0.666667
-Gmin = 0.00463511
-vernier = 0.888888
-vernier = 1
-Gmin = 0.000653801
-Gmin = 7.02013e-05
-Gmin = 7.53781e-06
-Gmin = 8.09366e-07
-Gmin = 8.6905e-08
-Gmin = 9.33136e-09
-Gmin = 1.00195e-09
-Gmin = 1.07583e-10
-Gmin = 1.15517e-11
-Gmin = 1.24035e-12
-Gmin = 1.33182e-13
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.12
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.686553%
+Source Step = 0.713187%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.2
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Gmin = 100
+vernier = 0.5
+vernier = 0.25
+Gmin = 26.2144
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+Gmin = 23.9176
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 24.0986
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 10000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.12
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.834517%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+Gmin = 2.09715
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
 Gmin = 0
 Gmin stepping succeeded in finding the operating point.
 
+.step vbeta=-0.19
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Gmin = 10
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+Gmin = 4.55111
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+Gmin = 4.39603
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 4.38745
+Gmin = 0
+Gmin stepping failed
 
-Date: Wed Apr 15 18:04:31 2020
-Total elapsed time: 0.073 seconds.
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.935133%
+vernier = 0.000976563
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 0.935133%
+vernier = 0.000976563
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.18
+Direct Newton iteration for .op point succeeded.
+.step vbeta=-0.17
+Direct Newton iteration for .op point succeeded.
+.step vbeta=-0.16
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Gmin = 100000
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+Gmin = 100000
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.11269%
+vernier = 0.000976563
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.15
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.15412%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.15412%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.14
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 10 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.18963%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.13
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.21922%
+Source Step = 1.24586%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.69 ms.
+.step vbeta=-0.12
+.step vbeta=-0.11
+.step vbeta=-0.1
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.33464%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Gmin = 100
+Gmin = 10.7374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.49756
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.29025%
+Source Step = 1.32576%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration for .op point succeeded.
+.step vbeta=-0.09
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Gmin = 100
+Gmin = 10.7374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.49756
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.34055%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient succeeded in finding the operating point at 327.689 ms.
+.step vbeta=-0.08
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Source Step = 1.3879%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Gmin = 100
+Gmin = 10.7374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+vernier = 0.03125
+vernier = 0.015625
+Gmin = 5.49756
+vernier = 0.0078125
+vernier = 0.00390625
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.36127%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+.step vbeta=-0.07
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.39678%
+vernier = 0.000976563
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+Direct Newton iteration for .op point succeeded.
+.step vbeta=-0.06
+.step vbeta=-0.05
+.step vbeta=-0.04
+.step vbeta=-0.03
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.51515%
+vernier = 0.00390625
+Source Step = 1.49444%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+.step vbeta=-0.02
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.51515%
+vernier = 0.00390625
+Source Step = 1.51219%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 5 탎.
+.step vbeta=-0.01
+Direct Newton iteration for .op point succeeded.
+.step vbeta=3.1225e-17
+.step vbeta=0.01
+.step vbeta=0.02
+.step vbeta=0.03
+.step vbeta=0.04
+.step vbeta=0.05
+.step vbeta=0.06
+.step vbeta=0.07
+.step vbeta=0.08
+.step vbeta=0.09
+Direct Newton iteration failed to find .op point.  (Use ".option noopiter" to skip.)
+Starting Gmin stepping
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Increasing initial diagonal Gmin to 100000
+Increasing initial diagonal Gmin to 1e+06
+Initial Gmin=1e+06 failed
+Gmin stepping failed
+
+Starting source stepping with srcstepmethod=0
+Source Step = 3.0303%
+vernier = 0.25
+Source Step = 1.66016%
+Source Step = 1.68975%
+Starting source stepping with srcstepmethod=1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 1
+Singular matrix:  Check node x1:r_solved
+   Iteration No. 2
+Could not converge to DC with sources off!
+Pseudo Transient failed in finding the operating point at 9.21387 탎.
+.step vbeta=0.1
+.step vbeta=0.11
+.step vbeta=0.12
+.step vbeta=0.13
+.step vbeta=0.14
+.step vbeta=0.15
+.step vbeta=0.16
+.step vbeta=0.17
+.step vbeta=0.18
+.step vbeta=0.19
+.step vbeta=0.2
+
+Date: Fri Apr 17 00:51:16 2020
+Total elapsed time: 9.745 seconds.
 
 tnom = 27
 temp = 27
 method = trap
-totiter = 582
+totiter = 2141056
 traniter = 0
 tranpoints = 0
 accept = 0
-rejected = 0
-matrix size = 34
-fillins = 31
+rejected = 49703
+matrix size = 35
+fillins = 14
 solver = Normal
-Matrix Compiler1: 1.27 KB object code size
-Matrix Compiler2: 2.61 KB object code size  0.3/0.3/[0.2]
-
+Matrix Compiler1:      73 opcodes  0.3/[0.2]/0.2
+Matrix Compiler2: off
