@@ -1,0 +1,107 @@
+
+   --- Expanded Deck Component Count ---
+B's 8
+E's 5
+G's 1
+R's 1
+V's 4
+tot: 19
+
+
+    --- Expanded Netlist ---
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_r_test.asc
+vdplus step 0 1.405
+valph alph 0 0.20944
+vbeta beta 0 0.016
+vr r 0 13.9
+b:x1:theta 0 theta i=acos(cos(v(alph)+v(beta))-cos(v(alph))*v(step)/v(r)) rpar=1
+b:x1:x1:length_past x1:x1:length_past 0 v=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0)
+b:x1:x1:triangular_area x1:x1:n002 x1:x1:n003 v=0.5*cos(v(alph))*v(step)*v(x)
+b:x1:x1:curved_area x1:x1:n003 0 v=0.5*v(r)**2*(v(x1:x1:omega)-sin(v(x1:x1:omega)))
+b:x1:x1:x1:theta 0 x1:x1:nc_02 i=2*acos(v(x1:x1:nc_01)/v(r)) rpar=1
+b:x1:x1:x1:a 0 x1:x1:area_past i=0.5*v(r)**2*(v(x1:x1:nc_02) - sin(v(x1:x1:nc_02))) rpar=1
+e:x1:x1:x1:r x1:x1:nc_01 0 r x1:x1:length_past 1
+b:x1:x1:arc 0 arc i=v(r)*(v(x1:x1:omega)) rpar=1
+e:x1:x1:alph x1:x1:n001 0 alph 0 1
+e:x1:x1:gamma x1:x1:gamma x1:x1:n001 beta 0 1
+e:x1:x1:omega x1:x1:omega x1:x1:gamma theta 0 1
+e:x1:x1:area_past area x1:x1:n002 0 x1:x1:area_past 1
+g:x1:x1:x2:x1:1 0 x1:x1:x2:nc_01 step 0 1
+r:x1:x1:x2:x1:1 x1:x1:x2:nc_01 0 1
+b:x1:x1:x1 0 x i=cos(v(beta)-v(x1:x1:omega)/2)*v(step)/sin(v(x1:x1:omega)/2-v(x1:x1:gamma)) rpar=1
+.dc vr -200 200 0.1 vbeta -.2 .2 .01
+.end
+
+WARNING: Less than two connections to node AREA.  This node is used by E:X1:X1:AREA_PAST.
+Ignoring empty pin current: Ix(x1:alph)
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:r)
+Ignoring empty pin current: Ix(x1:x1:alph)
+Ignoring empty pin current: Ix(x1:x1:beta)
+Ignoring empty pin current: Ix(x1:x1:step)
+Ignoring empty pin current: Ix(x1:x1:r)
+Ignoring empty pin current: Ix(x1:x1:theta)
+Ignoring empty pin current: Ix(x1:x1:x1:h)
+Ignoring empty pin current: Ix(x1:x1:x1:radius)
+Ignoring empty pin current: Ix(x1:x1:x2:x)
+Ignoring empty pin current: Ix(x1:x1:x2:x1:x)
+.step vbeta=-0.2
+.step vbeta=-0.19
+.step vbeta=-0.18
+.step vbeta=-0.17
+.step vbeta=-0.16
+.step vbeta=-0.15
+.step vbeta=-0.14
+.step vbeta=-0.13
+.step vbeta=-0.12
+.step vbeta=-0.11
+.step vbeta=-0.1
+.step vbeta=-0.09
+.step vbeta=-0.08
+.step vbeta=-0.07
+.step vbeta=-0.06
+.step vbeta=-0.05
+.step vbeta=-0.04
+.step vbeta=-0.03
+.step vbeta=-0.02
+.step vbeta=-0.01
+.step vbeta=3.1225e-17
+.step vbeta=0.01
+.step vbeta=0.02
+.step vbeta=0.03
+.step vbeta=0.04
+.step vbeta=0.05
+.step vbeta=0.06
+.step vbeta=0.07
+.step vbeta=0.08
+.step vbeta=0.09
+.step vbeta=0.1
+.step vbeta=0.11
+.step vbeta=0.12
+.step vbeta=0.13
+.step vbeta=0.14
+.step vbeta=0.15
+.step vbeta=0.16
+.step vbeta=0.17
+.step vbeta=0.18
+.step vbeta=0.19
+.step vbeta=0.2
+
+Date: Fri Apr 17 16:41:10 2020
+Total elapsed time: 2.482 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 330680
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 30
+fillins = 0
+solver = Normal
+Matrix Compiler1: 662 bytes object code size  0.6/0.1/[0.1]
+Matrix Compiler2: 1.81 KB object code size  0.1/0.2/[0.1]
+

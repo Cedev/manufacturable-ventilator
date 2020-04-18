@@ -1,0 +1,59 @@
+
+   --- Expanded Deck Component Count ---
+B's 8
+E's 5
+G's 2
+R's 2
+V's 4
+tot: 21
+
+
+    --- Expanded Netlist ---
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_x_test.asc
+vdplus step 0 1.405
+valph alph 0 0.20944
+vbeta beta 0 0.16
+vx x 0 7
+b:x1:theta 0 theta i=2*(acos(((v(x)/v(step))*sin((v(alph)+v(beta)+ 3.14159265358979 /2))-sin((v(beta))))/sqrt((v(x)/v(step))**2+2*(v(x)/v(step))*cos((v(alph)+v(beta)+ 3.14159265358979 /2)+(v(beta)))+1)))-v(beta)-v(alph) rpar=1
+b:x1:x3:length_past x1:x3:length_past 0 v=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0)
+b:x1:x3:triangular_area x1:x3:n002 x1:x3:n003 v=0.5*cos(v(alph))*v(step)*v(x)
+b:x1:x3:curved_area x1:x3:n003 0 v=0.5*v(r)**2*(v(x1:x3:omega)-sin(v(x1:x3:omega)))
+b:x1:x3:x1:theta 0 x1:x3:nc_02 i=2*acos(v(x1:x3:nc_01)/v(r)) rpar=1
+b:x1:x3:x1:a 0 x1:x3:area_past i=0.5*v(r)**2*(v(x1:x3:nc_02) - sin(v(x1:x3:nc_02))) rpar=1
+e:x1:x3:x1:r x1:x3:nc_01 0 r x1:x3:length_past 1
+b:x1:x3:arc 0 arc i=v(r)*(v(x1:x3:omega)) rpar=1
+e:x1:x3:alph x1:x3:n001 0 alph 0 1
+e:x1:x3:gamma x1:x3:gamma x1:x3:n001 beta 0 1
+e:x1:x3:omega x1:x3:omega x1:x3:gamma theta 0 1
+e:x1:x3:area_past area x1:x3:n002 0 x1:x3:area_past 1
+g:x1:x3:x2:x1:1 0 x1:x3:x2:nc_01 step 0 1
+r:x1:x3:x2:x1:1 x1:x3:x2:nc_01 0 1
+b:x1:x3:r 0 r i=cos(v(alph))*v(step)/(cos(v(x1:x3:gamma))-cos(v(theta))) rpar=1
+g:x1:x3:x3:x1:1 0 x1:x3:x3:nc_01 x 0 1
+r:x1:x3:x3:x1:1 x1:x3:x3:nc_01 0 1
+.dc vx 0 20 0.1
+.end
+
+WARNING: Less than two connections to node AREA.  This node is used by E:X1:X3:AREA_PAST.
+Ignoring empty pin current: Ix(x1:alph)
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:x)
+
+Date: Fri Apr 17 15:18:18 2020
+Total elapsed time: 0.073 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 517
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 31
+fillins = 0
+solver = Normal
+Matrix Compiler1: 622 bytes object code size  0.2/0.1/[0.1]
+Matrix Compiler2: 1.88 KB object code size  0.1/0.3/[0.1]
+
