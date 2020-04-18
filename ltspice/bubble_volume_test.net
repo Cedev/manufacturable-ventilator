@@ -7,16 +7,11 @@ XX1 alph beta step N001 R theta arc x bubble_volume
 
 * block symbol definitions
 .subckt bubble_volume alph beta step area r theta arc x
-Rr r 0 1
-Gerror 0 r signed_area N001 1
 XX3 area nc
-Barea N001 0 V=max(v(area), v(min_area))
-XX5 alph beta step min_area min_radius N003 NC_01 NC_02 bubble_volume_theta
-Bpi N003 0 V=pi
-XX1 alph beta step bubble_area N002 theta arc x bubble_volume_r
-Bsigned_area signed_area 0 V=sgn(v(r)-v(min_radius)-epsilon)*v(bubble_area)
-Gr 0 r r 0 1
-Br N002 0 V=abs(v(r)-v(min_radius)-epsilon) + v(min_radius) + epsilon
+XX5 alph beta step min_area min_radius N001 NC_01 NC_02 bubble_volume_theta
+Bpi N001 0 V=pi
+XX1 alph beta step bubble_area r theta arc x bubble_volume_r
+Br 0 r I=v(r)+if(v(r) > v(min_radius), v(bubble_area) - max(v(area), v(min_area)), v(r) - v(min_radius) - epsilon) rpar=1
 .param epsilon=0.00001
 .ends bubble_volume
 
@@ -60,6 +55,6 @@ BA 0 A I=0.5*v(radius)**2*(v(theta) - sin(v(theta))) rpar=1
 Er r 0 radius h 1
 .ends chord
 
-.dc Varea -2 2 0.1 VBeta 0.01 0.02 .001
+.dc Varea -2 100 0.1 VBeta 0.01 0.02 .001
 .backanno
 .end
