@@ -1,11 +1,10 @@
 
    --- Expanded Deck Component Count ---
-B's 9
-E's 5
-G's 1
-R's 1
+B's 8
+G's 5
+R's 5
 V's 4
-tot: 20
+tot: 22
 
 
     --- Expanded Netlist ---
@@ -14,34 +13,41 @@ vdplus step 0 1.405
 valph alph 0 0.20944
 vbeta beta 0 0.016
 vtheta theta 0 0.5
-b:x1:x 0 x1:nc_01 i=cos(v(beta)-(v(alph)+v(beta)+v(theta))/2)*v(step)/sin((v(alph)+v(beta)+v(theta))/2-v(alph)-v(beta)) rpar=1
 b:x1:r 0 r i=cos(v(alph))*v(step)/(cos(v(alph)+v(beta))-cos(v(theta))) rpar=1
-b:x1:x1:length_past x1:x1:length_past 0 v=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0)
-b:x1:x1:triangular_area x1:x1:n002 x1:x1:n003 v=0.5*cos(v(alph))*v(step)*v(x)
-b:x1:x1:curved_area x1:x1:n003 0 v=0.5*v(r)**2*(v(x1:x1:omega)-sin(v(x1:x1:omega)))
-b:x1:x1:x1:theta 0 x1:x1:nc_02 i=2*acos(v(x1:x1:nc_01)/v(r)) rpar=1
-b:x1:x1:x1:a 0 x1:x1:area_past i=0.5*v(r)**2*(v(x1:x1:nc_02) - sin(v(x1:x1:nc_02))) rpar=1
-e:x1:x1:x1:r x1:x1:nc_01 0 r x1:x1:length_past 1
+b:x1:x1:xchord:theta 0 x1:x1:nc_02 i=2*acos(v(x1:x1:nc_01)/v(r)) rpar=1
+b:x1:x1:xchord:a 0 x1:x1:area_past i=0.5*v(r)**2*(v(x1:x1:nc_02) - sin(v(x1:x1:nc_02))) rpar=1
+g:x1:x1:xchord:r 0 x1:x1:nc_01 r x1:x1:length_past 1
+r:x1:x1:xchord:r x1:x1:nc_01 0 1
 b:x1:x1:arc 0 arc i=v(r)*(v(x1:x1:omega)) rpar=1
-e:x1:x1:alph x1:x1:n001 0 alph 0 1
-e:x1:x1:gamma x1:x1:gamma x1:x1:n001 beta 0 1
-e:x1:x1:omega x1:x1:omega x1:x1:gamma theta 0 1
-e:x1:x1:area_past area x1:x1:n002 0 x1:x1:area_past 1
-g:x1:x1:x2:x1:1 0 x1:x1:x2:nc_01 step 0 1
-r:x1:x1:x2:x1:1 x1:x1:x2:nc_01 0 1
+r:x1:x1:x2:nc x1:x1:x2:n001 0 1
+g:x1:x1:x2:nc 0 x1:x1:x2:n001 step 0 1
 b:x1:x1:x1 0 x i=cos(v(beta)-v(x1:x1:omega)/2)*v(step)/sin(v(x1:x1:omega)/2-v(x1:x1:gamma)) rpar=1
+g:x1:x1:omega x1:x1:gamma x1:x1:omega theta 0 1
+g:x1:x1:gamma alph x1:x1:gamma beta 0 1
+g:x1:x1:area_past x1:x1:n001 area 0 x1:x1:area_past 1
+b:x1:x1:length_past 0 x1:x1:length_past i=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
+r:x1:x1:beta x1:x1:gamma alph 1
+r:x1:x1:theta x1:x1:omega x1:x1:gamma 1
+b:x1:x1:triangular_area x1:x1:n002 x1:x1:n001 i=0.5*cos(v(alph))*v(step)*v(x) rpar=1
+b:x1:x1:curved_area 0 x1:x1:n002 i=0.5*v(r)**2*(v(x1:x1:omega)-sin(v(x1:x1:omega))) rpar=1
+r:x1:x1:area_past area x1:x1:n001 1
 .dc vtheta 3.1415 3.1415 0.01
 .end
 
-WARNING: Less than two connections to node AREA.  This node is used by E:X1:X1:AREA_PAST.
 .dc: Increment so large that there's only one step.
-Ignoring empty pin current: Ix(x1:alph)
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:theta)
+Ignoring empty pin current: Ix(x1:x1:beta)
+Ignoring empty pin current: Ix(x1:x1:step)
+Ignoring empty pin current: Ix(x1:x1:r)
+Ignoring empty pin current: Ix(x1:x1:theta)
+Ignoring empty pin current: Ix(x1:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:x1:x2:x)
 
-Date: Fri Apr 17 15:50:56 2020
-Total elapsed time: 0.093 seconds.
+Date: Sat Apr 18 09:45:21 2020
+Total elapsed time: 0.059 seconds.
 
 tnom = 27
 temp = 27
@@ -51,8 +57,8 @@ traniter = 0
 tranpoints = 0
 accept = 0
 rejected = 0
-matrix size = 31
+matrix size = 21
 fillins = 0
 solver = Normal
-Matrix Compiler1: 586 bytes object code size
-Matrix Compiler2: 1.96 KB object code size
+Matrix Compiler1: 450 bytes object code size
+Matrix Compiler2: 1.65 KB object code size

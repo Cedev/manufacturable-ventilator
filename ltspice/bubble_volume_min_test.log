@@ -1,0 +1,95 @@
+
+   --- Expanded Deck Component Count ---
+B's 18
+G's 10
+R's 10
+V's 5
+tot: 43
+
+
+    --- Expanded Netlist ---
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_min_test.asc
+b:xmin_area:r 0 min_radius i=cos(v(alph))*v(step)/(cos(v(alph)+v(beta))-cos(v(n001))) rpar=1
+b:xmin_area:x1:xchord:theta 0 xmin_area:x1:nc_02 i=2*acos(v(xmin_area:x1:nc_01)/v(min_radius)) rpar=1
+b:xmin_area:x1:xchord:a 0 xmin_area:x1:area_past i=0.5*v(min_radius)**2*(v(xmin_area:x1:nc_02) - sin(v(xmin_area:x1:nc_02))) rpar=1
+g:xmin_area:x1:xchord:r 0 xmin_area:x1:nc_01 min_radius xmin_area:x1:length_past 1
+r:xmin_area:x1:xchord:r xmin_area:x1:nc_01 0 1
+b:xmin_area:x1:arc 0 nc_01 i=v(min_radius)*(v(xmin_area:x1:omega)) rpar=1
+r:xmin_area:x1:x2:nc xmin_area:x1:x2:n001 0 1
+g:xmin_area:x1:x2:nc 0 xmin_area:x1:x2:n001 step 0 1
+b:xmin_area:x1:x1 0 nc_02 i=cos(v(beta)-v(xmin_area:x1:omega)/2)*v(step)/sin(v(xmin_area:x1:omega)/2-v(xmin_area:x1:gamma)) rpar=1
+g:xmin_area:x1:omega xmin_area:x1:gamma xmin_area:x1:omega n001 0 1
+g:xmin_area:x1:gamma alph xmin_area:x1:gamma beta 0 1
+g:xmin_area:x1:area_past xmin_area:x1:n001 min_area 0 xmin_area:x1:area_past 1
+b:xmin_area:x1:length_past 0 xmin_area:x1:length_past i=if(v(beta) > v(alph), v(min_radius)-v(min_radius)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
+r:xmin_area:x1:beta xmin_area:x1:gamma alph 1
+r:xmin_area:x1:theta xmin_area:x1:omega xmin_area:x1:gamma 1
+b:xmin_area:x1:triangular_area xmin_area:x1:n002 xmin_area:x1:n001 i=0.5*cos(v(alph))*v(step)*v(nc_02) rpar=1
+b:xmin_area:x1:curved_area 0 xmin_area:x1:n002 i=0.5*v(min_radius)**2*(v(xmin_area:x1:omega)-sin(v(xmin_area:x1:omega))) rpar=1
+r:xmin_area:x1:area_past min_area xmin_area:x1:n001 1
+bpi n001 0 v=3.14159265358979 
+b:xbubble_area:theta 0 theta i=acos(cos(v(alph)+v(beta))-cos(v(alph))*v(step)/v(r)) rpar=1
+b:xbubble_area:x1:xchord:theta 0 xbubble_area:x1:nc_02 i=2*acos(v(xbubble_area:x1:nc_01)/v(r)) rpar=1
+b:xbubble_area:x1:xchord:a 0 xbubble_area:x1:area_past i=0.5*v(r)**2*(v(xbubble_area:x1:nc_02) - sin(v(xbubble_area:x1:nc_02))) rpar=1
+g:xbubble_area:x1:xchord:r 0 xbubble_area:x1:nc_01 r xbubble_area:x1:length_past 1
+r:xbubble_area:x1:xchord:r xbubble_area:x1:nc_01 0 1
+b:xbubble_area:x1:arc 0 arc i=v(r)*(v(xbubble_area:x1:omega)) rpar=1
+r:xbubble_area:x1:x2:nc xbubble_area:x1:x2:n001 0 1
+g:xbubble_area:x1:x2:nc 0 xbubble_area:x1:x2:n001 step 0 1
+b:xbubble_area:x1:x1 0 x i=cos(v(beta)-v(xbubble_area:x1:omega)/2)*v(step)/sin(v(xbubble_area:x1:omega)/2-v(xbubble_area:x1:gamma)) rpar=1
+g:xbubble_area:x1:omega xbubble_area:x1:gamma xbubble_area:x1:omega theta 0 1
+g:xbubble_area:x1:gamma alph xbubble_area:x1:gamma beta 0 1
+g:xbubble_area:x1:area_past xbubble_area:x1:n001 bubble_area 0 xbubble_area:x1:area_past 1
+b:xbubble_area:x1:length_past 0 xbubble_area:x1:length_past i=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
+r:xbubble_area:x1:beta xbubble_area:x1:gamma alph 1
+r:xbubble_area:x1:theta xbubble_area:x1:omega xbubble_area:x1:gamma 1
+b:xbubble_area:x1:triangular_area xbubble_area:x1:n002 xbubble_area:x1:n001 i=0.5*cos(v(alph))*v(step)*v(x) rpar=1
+b:xbubble_area:x1:curved_area 0 xbubble_area:x1:n002 i=0.5*v(r)**2*(v(xbubble_area:x1:omega)-sin(v(xbubble_area:x1:omega))) rpar=1
+r:xbubble_area:x1:area_past bubble_area xbubble_area:x1:n001 1
+br 0 error i=if(v(r) > v(min_radius), v(bubble_area) - max(v(area), v(min_area)), v(r) + v(min_area) - max(v(area), v(min_area)) - v(min_radius)) rpar=1
+vdplus step 0 1.405
+valph alph 0 0.20944
+vbeta beta 0 0.016
+vr r 0 15.4
+varea area 0 13.9
+.dc vr -2 2 0.01
+.end
+
+Ignoring empty pin current: Ix(xmin_area:beta)
+Ignoring empty pin current: Ix(xmin_area:step)
+Ignoring empty pin current: Ix(xmin_area:theta)
+Ignoring empty pin current: Ix(xbubble_area:beta)
+Ignoring empty pin current: Ix(xbubble_area:step)
+Ignoring empty pin current: Ix(xbubble_area:r)
+Ignoring empty pin current: Ix(xmin_area:x1:beta)
+Ignoring empty pin current: Ix(xmin_area:x1:step)
+Ignoring empty pin current: Ix(xmin_area:x1:r)
+Ignoring empty pin current: Ix(xmin_area:x1:theta)
+Ignoring empty pin current: Ix(xbubble_area:x1:beta)
+Ignoring empty pin current: Ix(xbubble_area:x1:step)
+Ignoring empty pin current: Ix(xbubble_area:x1:r)
+Ignoring empty pin current: Ix(xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(xmin_area:x1:xchord:h)
+Ignoring empty pin current: Ix(xmin_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(xmin_area:x1:x2:x)
+Ignoring empty pin current: Ix(xbubble_area:x1:xchord:h)
+Ignoring empty pin current: Ix(xbubble_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(xbubble_area:x1:x2:x)
+
+Date: Sat Apr 18 10:03:46 2020
+Total elapsed time: 0.064 seconds.
+
+tnom = 27
+temp = 27
+method = trap
+totiter = 861
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 0
+matrix size = 39
+fillins = 0
+solver = Normal
+Matrix Compiler1: 1.04 KB object code size  0.3/0.1/[0.1]
+Matrix Compiler2: 3.16 KB object code size  0.2/0.3/[0.1]
+

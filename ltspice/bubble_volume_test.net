@@ -1,26 +1,26 @@
 * C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_test.asc
 VDplus step 0 1.405
 Valph alph 0 0.20944
-VBeta beta 0 0.0160524
-Varea N001 0 13.921875
+VBeta beta 0 0.016
+Varea N001 0 0
 XX1 alph beta step N001 R theta arc x bubble_volume
 
 * block symbol definitions
 .subckt bubble_volume alph beta step area r theta arc x
 XX3 area nc
-XX5 alph beta step min_area min_radius N001 NC_01 NC_02 bubble_volume_theta
+XXmin_area alph beta step min_area min_radius N001 NC_01 NC_02 bubble_volume_theta
 Bpi N001 0 V=pi
-XX1 alph beta step bubble_area r theta arc x bubble_volume_r
-Br 0 r I=v(r)+if(v(r) > v(min_radius), v(bubble_area) - max(v(area), v(min_area)), v(r) - v(min_radius) - epsilon) rpar=1
-.param epsilon=0.00001
+XXbubble_area alph beta step bubble_area r theta arc x bubble_volume_r
+Br 0 r I=v(r)+if(v(r) > v(min_radius), v(bubble_area) - max(v(area), v(min_area)), v(r)+v(min_area)-max(v(area), v(min_area))- v(min_radius)) rpar=1 cpar={cpar}
+.param cpar=1u
 .ends bubble_volume
 
 .subckt nc x
-XX1 x NC_01 id
+Rnc N001 0 1
+Gnc 0 N001 x 0 1
 .ends nc
 
 .subckt bubble_volume_theta alph beta step area r theta arc x
-Bx 0 NC_01 I=cos(v(beta)-(v(alph)+v(beta)+v(theta))/2)*v(step)/sin((v(alph)+v(beta)+v(theta))/2-v(alph)-v(beta)) rpar=1
 Br 0 r I=cos(v(alph))*v(step)/(cos(v(alph)+v(beta))-cos(v(theta))) rpar=1
 XX1 alph beta step area r theta arc x bubble_volume_r-theta
 .ends bubble_volume_theta
@@ -30,31 +30,29 @@ Btheta 0 theta I=acos(cos(v(alph)+v(beta))-cos(v(alph))*v(step)/v(r)) rpar=1
 XX1 alph beta step area r theta arc x bubble_volume_r-theta
 .ends bubble_volume_r
 
-.subckt id x id_x
-G1 0 id_x x 0 1
-R1 id_x 0 1
-.ends id
-
 .subckt bubble_volume_r-theta alph beta step area r theta arc x
-Blength_past length_past 0 V=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0)
-Btriangular_area N002 N003 V=0.5*cos(v(alph))*v(step)*v(x)
-Bcurved_area N003 0 V=0.5*v(r)**2*(v(omega)-sin(v(omega)))
-XX1 length_past r area_past NC_01 NC_02 chord
+XXchord length_past r area_past NC_01 NC_02 chord
 Barc 0 arc I=v(r)*(v(omega)) rpar=1
-Ealph N001 0 alph 0 1
-Egamma gamma N001 beta 0 1
-Eomega omega gamma theta 0 1
-Earea_past area N002 0 area_past 1
 XX2 step nc
 Bx1 0 x I=cos(v(beta)-v(omega)/2)*v(step)/sin(v(omega)/2-v(gamma)) rpar=1
+Gomega gamma omega theta 0 1
+Ggamma alph gamma beta 0 1
+Garea_past N001 area 0 area_past 1
+Blength_past 0 length_past I=if(v(beta) > v(alph), v(r)-v(r)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
+Rbeta gamma alph 1
+Rtheta omega gamma 1
+Btriangular_area N002 N001 I=0.5*cos(v(alph))*v(step)*v(x) rpar=1
+Bcurved_area 0 N002 I=0.5*v(r)**2*(v(omega)-sin(v(omega))) rpar=1
+Rarea_past area N001 1
 .ends bubble_volume_r-theta
 
 .subckt chord h radius A r theta
 Btheta 0 theta I=2*acos(v(r)/v(radius)) rpar=1
 BA 0 A I=0.5*v(radius)**2*(v(theta) - sin(v(theta))) rpar=1
-Er r 0 radius h 1
+Gr 0 r radius h 1
+Rr r 0 1
 .ends chord
 
-.dc Varea -2 100 0.1 VBeta 0.01 0.02 .001
+.dc Varea -2 100 0.1 VBeta 0.01 0.2 0.01
 .backanno
 .end
