@@ -17,21 +17,21 @@ v1 n004 0 10000
 lsupply n004 n005 8510.63529468225 rser=0
 b§rsupply n005 supply r=1/(0.85 **2)*(3444780952.60948 *max(abs((i(lsupply))), 0.00170380227750929 *0.0001))
 v2 v2 0 pulse(0 2000 .004 1.5e-3 1.5e-3 1)
-lc1 v2 n007 flux=7234.04000047991 /v(d1)*x rser=0
-lc2 0 n001 flux=7234.04000047991 /v(d2)*x rser=0
+lc1 v2 n007 flux=7234.04000047991 *x rser=0
+lc2 0 n001 flux=7234.04000047991 *x rser=0
 b§rcontrol1 n007 c1 r=v(rc1)*(3444780952.60948 *max(abs((i(lc1))), 0.00170380227750929 *0.0001))
 b§rcontrol2 n001 c2 r=v(rc2)*(3444780952.60948 *max(abs((i(lc2))), 0.00170380227750929 *0.0001))
 lo1 n006 0 11625.8475329975 rser=0
 lo2 n003 0 11625.8475329975 rser=0
 b§ro2 pout2 n003 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo2))), 0.00170380227750929 *0.0001))
 b§ro1 pout1 n006 r=1/(3.45341893472363 **2)*(3444780952.60948 *max(abs((i(lo1))), 0.00170380227750929 *0.0001))
-lv1 n008 0 flux=14468.0800009598 /sqrt(5869225632576.65)*x rser=0
-lv2 n002 0 flux=14468.0800009598 /sqrt(v(rv2))*x rser=0
+lv1 n008 0 flux=14468.0800009598 *x rser=0
+lv2 n002 0 flux=14468.0800009598 *x rser=0
 b§rv2 pbubble2 n002 r=v(rv2)*(3444780952.60948 *max(abs((i(lv2))), 0.00170380227750929 *0.0001))
 b§rv1 pbubble1 n008 r=5869225632576.65 *(3444780952.60948 *max(abs((i(lv1))), 0.00170380227750929 *0.0001))
-b§qs 0 qs i=i(lsupply)/ 0.00170380227750929 rpar=1
-b§qc1 0 qc1 i=i(lc1)/ 0.00170380227750929 rpar=1
-b§qc2 0 qc2 i=i(lc2)/ 0.00170380227750929 rpar=1
+b§qs 0 qs i=i(rsupply)/ 0.00170380227750929 rpar=1
+b§qc1 0 qc1 i=i(rc1)/ 0.00170380227750929 rpar=1
+b§qc2 0 qc2 i=i(rc2)/ 0.00170380227750929 rpar=1
 b§qv1 0 qv1 i=i(rv1)/ 0.00170380227750929 rpar=1
 b§qv2 0 qv2 i=i(rv2)/ 0.00170380227750929 rpar=1
 b§qo1 0 qo1 i=i(ro1)/ 0.00170380227750929 rpar=1
@@ -43,10 +43,10 @@ b§rec2 0 rec2 i=abs(v(qc2)* 18194.6182692314) rpar=1
 b§fc1 0 fc1 i=(v(c1)/ 10000 +2*(uramp(v(qc1))/ 1)**2)* 1 rpar=1
 b§fc2 0 fc2 i=(v(c2)/ 10000 +2*(uramp(v(qc2))/ 1)**2)* 1 rpar=1
 b§fsy 0 fsy i=v(supply)/ 10000 +2*v(qs)**2 rpar=1
-bubble1 pb2 pbubble1 v=v(active1)*v(delpb)
-b§pc1 c1 pbubble1 v=v(active1)*v(delpb)/2
-b§pc2 c2 pbubble2 v=v(active2)*v(delpb)/2
-bubble2 pb2 pbubble2 v=v(active2)*v(delpb)
+bubble1 pb2 pbubble1 v=v(delpb)
+b§pc1 c1 pbubble1 v=v(delpb)/2
+b§pc2 c2 pbubble2 v=0
+bubble2 pb2 pbubble2 v=0
 b§psy pb2 supply v=v(delpb)*1/4
 beta 0 beta i=0.016 rpar=1
 b§v 0 v i=13.9 rpar=1
@@ -59,13 +59,13 @@ b 0 b i=1.5*(-v(ts)+(v(ts)**3/3)+2/3+(2/3+v(ts)-(v(ts)**3/3))*cos(v(theta))) rpa
 a§state n009 n011 0 0 0 n012 n010 0 srflop
 b§to2 0 n009 i=if(v(lsp)>=10 ,v(active1),0) rpar=1
 b§to1 0 n011 i=if(v(lsp)>=10 ,v(active2),0) rpar=1
-b§qr 0 qr i=0.5*i(lsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp) rpar=1
-b§qe 0 qe i=0.5*i(lsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp) rpar=1
+b§qr 0 qr i=0.5*i(rsupply)*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp) rpar=1
+b§qe 0 qe i=0.5*i(rsupply)*(sqrt(0.3 *v(s1)+1)-1)*v(ramp) rpar=1
 b§dyc 0 dyc i=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta))) rpar=1
-b§delpb 0 delpb i=2* 3444780952.60948 *i(lsupply)**2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3 rpar=1
-b§qe2 pbubble2 pb2 i=v(active2)*v(qr)
+b§delpb 0 delpb i=2* 3444780952.60948 *i(rsupply)**2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3 rpar=1
+b§qe2 pbubble2 pb2 i=0
 b§qr1 pb2 pbubble1 i=v(active1)*v(qr)
-b§qr2 pb2 pbubble2 i=v(active2)*v(qe)
+b§qr2 pb2 pbubble2 i=0
 b§qe1 pbubble1 pb2 i=v(active1)*v(qe)
 b§pda 0 pda i=3444780952.60948 *0.75*i(rsupply)**2*(v(ts)+v(t)-(v(ts)**3+v(t)**3)/3)/ 3.45341893472363 *v(ramp) rpar=1
 b§pdi 0 pdi i=3444780952.60948 *0.75*i(rsupply)**2*(2/3-v(ts)+v(ts)**3/3)/ 3.45341893472363 *v(ramp) rpar=1
@@ -151,9 +151,9 @@ b§sv 0 sv i=v(r)*(v(beta)+v(zeta)) rpar=1
 b§yv 0 yv i=v(y1)*(0.3 *v(sv)+1)/(0.3 *v(s1)+1) rpar=1
 b§y1 0 y1 i=(0.3 *v(s1)+1)/6*log((1+v(t))/(1-v(t))) rpar=1
 b§dv 0 dv i=if(v(xap)> 8.64 ,v(r)-v(yv)-(8.64 *cos(0.20944)-v(r)*sin(v(beta)))/sin(v(zeta)),0) rpar=1
-b§rva 0 rva i=if(v(xap)- 8.64 < 1.95 ,1/((v(dv))+if((v(dv))>=0,1,-1)* 1e-05 /(1+exp(abs((v(dv)))/10)))**2,1/ 1.95 **2) rpar=1
-brv1 0 rv1 i=v(active1)*v(rva)+v(active2)* 0.262984878369494 rpar=1
-brv2 0 rv2 i=v(active2)*v(rva)+v(active1)* 0.262984878369494 rpar=1
+b§rva 0 rva i=if(v(xap)- 8.64 < 1.95 ,1/((v(dv)**2)+if((v(dv)**2)>=0,1,-1)* 1e-05 /(1+exp(abs((v(dv)**2))/10))),1/ 1.95 **2) rpar=1
+brv1 0 rv1 i=v(rva) rpar=1
+brv2 0 rv2 i=0.262984878369494 rpar=1
 b§xap 0 xap i=v(xcl)-1/((sin(v(theta)))+if((sin(v(theta)))>=0,1,-1)* 1e-05 /(1+exp(abs((sin(v(theta))))/10))) rpar=1
 r1 vbubble1cap 0 10g
 b1 0 active1 i=1 rpar=1
@@ -161,242 +161,100 @@ b2 0 active2 i=0 rpar=1
 rorient orient 0 1
 fbubble1 0 n013 bubble1 -1
 r2 n013 0 1
-.tran 0.01
+.op
 .option noopiter
 .end
 
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:area)
+Ignoring empty pin current: Ix(x1:x3:x)
+Ignoring empty pin current: Ix(x1:xmin_area:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:step)
+Ignoring empty pin current: Ix(x1:xmin_area:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:r)
+Ignoring empty pin current: Ix(x1:xmax_area:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:step)
+Ignoring empty pin current: Ix(x1:xmax_area:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
 Direct Newton iteration for .op point skipped.
 Starting Gmin stepping
-Gmin = 10
+Increasing initial diagonal Gmin to 100
+Increasing initial diagonal Gmin to 1000
+Increasing initial diagonal Gmin to 10000
+Gmin = 10000
 vernier = 0.5
-Gmin = 1.86414
+Gmin = 2071.26
 vernier = 0.25
 vernier = 0.125
 vernier = 0.0625
 vernier = 0.03125
 vernier = 0.015625
 vernier = 0.0078125
+Gmin = 2330.17
 vernier = 0.00390625
-Gmin = 1.75448
 vernier = 0.00195313
 vernier = 0.000976563
 vernier = 0.000488281
-Singular matrix:  Check nodes active1 and lo2#branch
-   Iteration No. 17
 Gmin = 0
-Singular matrix:  Check nodes active1 and lo2#branch
+Singular matrix:  Check nodes n002 and lv2#branch
+   Iteration No. 8
+Gmin = 0
+Singular matrix:  Check nodes n002 and lv2#branch
    Iteration No. 1
 Gmin stepping failed
 
 Starting source stepping with srcstepmethod=0
 Source Step = 3.0303%
 Source Step = 33.3333%
-Source Step = 49.6212%
-Source Step = 50.0355%
-Source Step = 50.1539%
-Source Step = 50.2723%
-Source Step = 50.3906%
-Source Step = 50.509%
-vernier = 0.00585938
-Source Step = 50.6392%
-Source Step = 50.8168%
-Source Step = 50.9943%
-Source Step = 51.1719%
-Source Step = 51.3494%
-vernier = 0.00878906
-Source Step = 51.5359%
-Source Step = 51.8022%
-Source Step = 52.0685%
-Source Step = 52.3349%
-Source Step = 52.6012%
-Source Step = 52.8675%
-vernier = 0.0131836
-Source Step = 53.267%
-Source Step = 53.6665%
-Source Step = 54.0661%
-Source Step = 54.4656%
-Source Step = 54.8651%
-vernier = 0.0197754
-Source Step = 55.4443%
-Source Step = 56.0436%
-Source Step = 56.6428%
-Source Step = 57.2421%
-Source Step = 57.8414%
-vernier = 0.0296631
-Source Step = 58.6803%
-Source Step = 59.5792%
-Source Step = 60.4781%
-Source Step = 61.377%
-Source Step = 62.2758%
-vernier = 0.0444946
-Source Step = 63.4893%
-Source Step = 64.8376%
-Source Step = 66.186%
-Source Step = 67.5343%
-Source Step = 68.8826%
-vernier = 0.0667419
-Source Step = 70.6354%
-Source Step = 72.6579%
-Source Step = 74.6804%
-Source Step = 76.7029%
-Source Step = 78.7254%
-vernier = 0.100113
-Source Step = 81.2535%
-Source Step = 84.2872%
-Source Step = 87.3209%
-Source Step = 90.3546%
-Source Step = 93.3884%
-vernier = 0.150169
-Source Step = 96.2325%
-vernier = 0.00938559
-Source Step = 96.1827%
+Source Step = 49.2424%
+vernier = 0.0625
+Source Step = 48.6299%
+Source Step = 48.6594%
 Starting source stepping with srcstepmethod=1
 Source Step = 3.0303%
 Source Step = 33.3333%
-Source Step = 50.1894%
-vernier = 0.015625
-Source Step = 50.1065%
-Source Step = 50.2249%
-Source Step = 50.3433%
-Source Step = 50.4616%
-Source Step = 50.58%
-vernier = 0.00585938
-Source Step = 50.7457%
-Source Step = 50.9233%
-Source Step = 51.1009%
-Source Step = 51.2784%
-Source Step = 51.456%
-vernier = 0.00878906
-Source Step = 51.6957%
-Source Step = 51.962%
-Source Step = 52.2283%
-Source Step = 52.4947%
-Source Step = 52.761%
-vernier = 0.0131836
-Source Step = 53.1072%
-Source Step = 53.5067%
-Source Step = 53.9062%
-Source Step = 54.3058%
-Source Step = 54.7053%
-vernier = 0.0197754
-Source Step = 55.2046%
-Source Step = 55.8039%
-Source Step = 56.4031%
-Source Step = 57.0024%
-Source Step = 57.6017%
-vernier = 0.0296631
-Source Step = 58.3208%
-Source Step = 59.2196%
-Source Step = 60.1185%
-Source Step = 61.0174%
-Source Step = 61.9163%
-vernier = 0.0444946
-Source Step = 62.95%
-Source Step = 64.2983%
-Source Step = 65.6466%
-Source Step = 66.995%
-Source Step = 68.3433%
-vernier = 0.0667419
-Source Step = 69.8264%
-Source Step = 71.8489%
-Source Step = 73.8714%
-Source Step = 75.8939%
-Source Step = 77.9164%
-vernier = 0.100113
-Source Step = 80.04%
-Source Step = 83.0737%
-Source Step = 86.1074%
-Source Step = 89.1412%
-Source Step = 92.1749%
-Source Step = 95.2086%
-vernier = 0.150169
-Source Step = 99.7592%
-Source Step = 100%
-Source stepping succeeded in finding the operating point.
+Source Step = 49.2898%
+Source stepping failed
 
-Ignoring empty pin current: Ix(x1:beta)
-Ignoring empty pin current: Ix(x1:step)
-Ignoring empty pin current: Ix(x1:area)
-Ignoring empty pin current: Ix(x1:x3:x)
-Ignoring empty pin current: Ix(x1:xmin_area:beta)
-Ignoring empty pin current: Ix(x1:xmin_area:step)
-Ignoring empty pin current: Ix(x1:xmin_area:theta)
-Ignoring empty pin current: Ix(x1:xbubble_area:beta)
-Ignoring empty pin current: Ix(x1:xbubble_area:step)
-Ignoring empty pin current: Ix(x1:xbubble_area:r)
-Ignoring empty pin current: Ix(x1:xmax_area:beta)
-Ignoring empty pin current: Ix(x1:xmax_area:step)
-Ignoring empty pin current: Ix(x1:xmax_area:r)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
-Ignoring empty pin current: Ix(x1:beta)
-Ignoring empty pin current: Ix(x1:step)
-Ignoring empty pin current: Ix(x1:area)
-Ignoring empty pin current: Ix(x1:x3:x)
-Ignoring empty pin current: Ix(x1:xmin_area:beta)
-Ignoring empty pin current: Ix(x1:xmin_area:step)
-Ignoring empty pin current: Ix(x1:xmin_area:theta)
-Ignoring empty pin current: Ix(x1:xbubble_area:beta)
-Ignoring empty pin current: Ix(x1:xbubble_area:step)
-Ignoring empty pin current: Ix(x1:xbubble_area:r)
-Ignoring empty pin current: Ix(x1:xmax_area:beta)
-Ignoring empty pin current: Ix(x1:xmax_area:step)
-Ignoring empty pin current: Ix(x1:xmax_area:r)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
-Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
+Pseudo Transient succeeded in finding the operating point at 11.1858 s.
 
-Date: Sun Apr 19 21:37:40 2020
-Total elapsed time: 2.467 seconds.
+Date: Mon Apr 20 00:19:43 2020
+Total elapsed time: 4.937 seconds.
 
 tnom = 27
 temp = 27
-method = modified trap
-totiter = 11247
-traniter = 2104
-tranpoints = 1053
-accept = 1050
-rejected = 3
+method = trap
+totiter = 88350
+traniter = 0
+tranpoints = 0
+accept = 0
+rejected = 1834
 matrix size = 140
-fillins = 759
+fillins = 475
 solver = Normal
-Thread vector: 47.7/32.1[4] 1.3/2.0[1] 9.6/4.3[4] 0.5/4.5[1]  2592/500
-Matrix Compiler1:    2361 opcodes  9.4/[3.5]/6.4
-Matrix Compiler2:    1639 opcodes
+Thread vector: 37.9/11.6[4] 0.0/0.0[4] 1.3/4.1[1] 0.4/1.7[1]  2592/500
+Matrix Compiler1:    1210 opcodes  5.7/2.8/[2.6]
+Matrix Compiler2: off
