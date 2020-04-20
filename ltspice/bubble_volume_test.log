@@ -1,21 +1,21 @@
 
    --- Expanded Deck Component Count ---
-B's 18
-G's 11
-R's 11
-V's 4
-tot: 44
+B's 27
+G's 16
+R's 16
+V's 5
+tot: 64
 
 
     --- Expanded Netlist ---
 * C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\bubble_volume_test.asc
 vdplus step 0 1.405
 valph alph 0 0.20944
-vbeta beta 0 0.016
-varea n001 0 0
+vbeta beta 0 pulse(0.2 -0.3 1m 8m 1m 1)
+varea varea 0 20
 r:x1:x3:nc x1:x3:n001 0 1
-g:x1:x3:nc 0 x1:x3:n001 n001 0 1
-b:x1:xmin_area:r 0 x1:min_radius i=cos(v(alph))*v(step)/(cos(v(alph)+v(beta))-cos(v(x1:n001))) rpar=1
+g:x1:x3:nc 0 x1:x3:n001 varea 0 1
+b:x1:xmin_area:r 0 x1:min_radius i=cos(v(alph))*v(step)/(cos(v(alph)+v(beta))-cos(v(x1:n002))) rpar=1
 b:x1:xmin_area:x1:xchord:theta 0 x1:xmin_area:x1:nc_02 i=2*acos(v(x1:xmin_area:x1:nc_01)/v(x1:min_radius)) rpar=1
 b:x1:xmin_area:x1:xchord:a 0 x1:xmin_area:x1:area_past i=0.5*v(x1:min_radius)**2*(v(x1:xmin_area:x1:nc_02) - sin(v(x1:xmin_area:x1:nc_02))) rpar=1
 g:x1:xmin_area:x1:xchord:r 0 x1:xmin_area:x1:nc_01 x1:min_radius x1:xmin_area:x1:length_past 1
@@ -24,7 +24,7 @@ b:x1:xmin_area:x1:arc 0 x1:nc_01 i=v(x1:min_radius)*(v(x1:xmin_area:x1:omega)) r
 r:x1:xmin_area:x1:x2:nc x1:xmin_area:x1:x2:n001 0 1
 g:x1:xmin_area:x1:x2:nc 0 x1:xmin_area:x1:x2:n001 step 0 1
 b:x1:xmin_area:x1:x1 0 x1:nc_02 i=cos(v(beta)-v(x1:xmin_area:x1:omega)/2)*v(step)/sin(v(x1:xmin_area:x1:omega)/2-v(x1:xmin_area:x1:gamma)) rpar=1
-g:x1:xmin_area:x1:omega x1:xmin_area:x1:gamma x1:xmin_area:x1:omega x1:n001 0 1
+g:x1:xmin_area:x1:omega x1:xmin_area:x1:gamma x1:xmin_area:x1:omega x1:n002 0 1
 g:x1:xmin_area:x1:gamma alph x1:xmin_area:x1:gamma beta 0 1
 g:x1:xmin_area:x1:area_past x1:xmin_area:x1:n001 x1:min_area 0 x1:xmin_area:x1:area_past 1
 b:x1:xmin_area:x1:length_past 0 x1:xmin_area:x1:length_past i=if(v(beta) > v(alph), v(x1:min_radius)-v(x1:min_radius)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
@@ -33,7 +33,7 @@ r:x1:xmin_area:x1:theta x1:xmin_area:x1:omega x1:xmin_area:x1:gamma 1
 b:x1:xmin_area:x1:triangular_area x1:xmin_area:x1:n002 x1:xmin_area:x1:n001 i=0.5*cos(v(alph))*v(step)*v(x1:nc_02) rpar=1
 b:x1:xmin_area:x1:curved_area 0 x1:xmin_area:x1:n002 i=0.5*v(x1:min_radius)**2*(v(x1:xmin_area:x1:omega)-sin(v(x1:xmin_area:x1:omega))) rpar=1
 r:x1:xmin_area:x1:area_past x1:min_area x1:xmin_area:x1:n001 1
-b:x1:pi x1:n001 0 v=3.14159265358979 
+b:x1:pi x1:n002 0 v=3.14159265358979 
 b:x1:xbubble_area:theta 0 theta i=acos(cos(v(alph)+v(beta))-cos(v(alph))*v(step)/v(r)) rpar=1
 b:x1:xbubble_area:x1:xchord:theta 0 x1:xbubble_area:x1:nc_02 i=2*acos(v(x1:xbubble_area:x1:nc_01)/v(r)) rpar=1
 b:x1:xbubble_area:x1:xchord:a 0 x1:xbubble_area:x1:area_past i=0.5*v(r)**2*(v(x1:xbubble_area:x1:nc_02) - sin(v(x1:xbubble_area:x1:nc_02))) rpar=1
@@ -52,10 +52,31 @@ r:x1:xbubble_area:x1:theta x1:xbubble_area:x1:omega x1:xbubble_area:x1:gamma 1
 b:x1:xbubble_area:x1:triangular_area x1:xbubble_area:x1:n002 x1:xbubble_area:x1:n001 i=0.5*cos(v(alph))*v(step)*v(x) rpar=1
 b:x1:xbubble_area:x1:curved_area 0 x1:xbubble_area:x1:n002 i=0.5*v(r)**2*(v(x1:xbubble_area:x1:omega)-sin(v(x1:xbubble_area:x1:omega))) rpar=1
 r:x1:xbubble_area:x1:area_past x1:bubble_area x1:xbubble_area:x1:n001 1
-b:x1:r 0 r i=v(r)+if(v(r) > v(x1:min_radius), v(x1:bubble_area) - max(v(n001), v(x1:min_area)), v(r)+v(x1:min_area)-max(v(n001), v(x1:min_area))- v(x1:min_radius)) rpar=1 cpar=1e-06 
-.dc varea -2 100 0.1 vbeta 0.01 0.2 0.01
+b:x1:r 0 r i=v(r)+if(v(r) > v(x1:min_radius), v(x1:bubble_area)-v(x1:target_area), v(r)+v(x1:min_area)-v(x1:target_area)-v(x1:min_radius)) rpar=1
+b:x1:target_area 0 x1:target_area i=limit(v(varea), v(x1:min_area), v(x1:max_area)) rpar=1
+b:x1:xmax_area:theta 0 x1:nc_03 i=acos(cos(v(alph)+v(beta))-cos(v(alph))*v(step)/v(x1:n001)) rpar=1
+b:x1:xmax_area:x1:xchord:theta 0 x1:xmax_area:x1:nc_02 i=2*acos(v(x1:xmax_area:x1:nc_01)/v(x1:n001)) rpar=1
+b:x1:xmax_area:x1:xchord:a 0 x1:xmax_area:x1:area_past i=0.5*v(x1:n001)**2*(v(x1:xmax_area:x1:nc_02) - sin(v(x1:xmax_area:x1:nc_02))) rpar=1
+g:x1:xmax_area:x1:xchord:r 0 x1:xmax_area:x1:nc_01 x1:n001 x1:xmax_area:x1:length_past 1
+r:x1:xmax_area:x1:xchord:r x1:xmax_area:x1:nc_01 0 1
+b:x1:xmax_area:x1:arc 0 x1:nc_04 i=v(x1:n001)*(v(x1:xmax_area:x1:omega)) rpar=1
+r:x1:xmax_area:x1:x2:nc x1:xmax_area:x1:x2:n001 0 1
+g:x1:xmax_area:x1:x2:nc 0 x1:xmax_area:x1:x2:n001 step 0 1
+b:x1:xmax_area:x1:x1 0 x1:nc_05 i=cos(v(beta)-v(x1:xmax_area:x1:omega)/2)*v(step)/sin(v(x1:xmax_area:x1:omega)/2-v(x1:xmax_area:x1:gamma)) rpar=1
+g:x1:xmax_area:x1:omega x1:xmax_area:x1:gamma x1:xmax_area:x1:omega x1:nc_03 0 1
+g:x1:xmax_area:x1:gamma alph x1:xmax_area:x1:gamma beta 0 1
+g:x1:xmax_area:x1:area_past x1:xmax_area:x1:n001 x1:max_area 0 x1:xmax_area:x1:area_past 1
+b:x1:xmax_area:x1:length_past 0 x1:xmax_area:x1:length_past i=if(v(beta) > v(alph), v(x1:n001)-v(x1:n001)*cos(v(beta)-v(alph))-v(step)*cos(v(alph)), 0) rpar=1
+r:x1:xmax_area:x1:beta x1:xmax_area:x1:gamma alph 1
+r:x1:xmax_area:x1:theta x1:xmax_area:x1:omega x1:xmax_area:x1:gamma 1
+b:x1:xmax_area:x1:triangular_area x1:xmax_area:x1:n002 x1:xmax_area:x1:n001 i=0.5*cos(v(alph))*v(step)*v(x1:nc_05) rpar=1
+b:x1:xmax_area:x1:curved_area 0 x1:xmax_area:x1:n002 i=0.5*v(x1:n001)**2*(v(x1:xmax_area:x1:omega)-sin(v(x1:xmax_area:x1:omega))) rpar=1
+r:x1:xmax_area:x1:area_past x1:max_area x1:xmax_area:x1:n001 1
+v:x1:r_max x1:n001 0 100000 
+.tran 0.01
 .end
 
+Direct Newton iteration for .op point succeeded.
 Ignoring empty pin current: Ix(x1:beta)
 Ignoring empty pin current: Ix(x1:step)
 Ignoring empty pin current: Ix(x1:area)
@@ -66,6 +87,9 @@ Ignoring empty pin current: Ix(x1:xmin_area:theta)
 Ignoring empty pin current: Ix(x1:xbubble_area:beta)
 Ignoring empty pin current: Ix(x1:xbubble_area:step)
 Ignoring empty pin current: Ix(x1:xbubble_area:r)
+Ignoring empty pin current: Ix(x1:xmax_area:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:step)
+Ignoring empty pin current: Ix(x1:xmax_area:r)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
@@ -74,49 +98,68 @@ Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
 Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
 Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
-Direct Newton iteration for .op point succeeded.
-.step vbeta=0.01
-.step vbeta=0.02
-.step vbeta=0.03
-.step vbeta=0.04
-.step vbeta=0.05
-.step vbeta=0.06
-.step vbeta=0.07
-Direct Newton iteration for .op point succeeded.
-.step vbeta=0.08
-.step vbeta=0.09
-.step vbeta=0.1
-.step vbeta=0.11
-.step vbeta=0.12
-.step vbeta=0.13
-.step vbeta=0.14
-.step vbeta=0.15
-.step vbeta=0.16
-.step vbeta=0.17
-.step vbeta=0.18
-.step vbeta=0.19
-.step vbeta=0.2
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:area)
+Ignoring empty pin current: Ix(x1:x3:x)
+Ignoring empty pin current: Ix(x1:xmin_area:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:step)
+Ignoring empty pin current: Ix(x1:xmin_area:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:r)
+Ignoring empty pin current: Ix(x1:xmax_area:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:step)
+Ignoring empty pin current: Ix(x1:xmax_area:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
 
-Date: Sat Apr 18 19:21:23 2020
-Total elapsed time: 0.825 seconds.
+Date: Sun Apr 19 21:18:11 2020
+Total elapsed time: 1.227 seconds.
 
 tnom = 27
 temp = 27
-method = trap
-totiter = 41732
-traniter = 0
-tranpoints = 0
-accept = 0
-rejected = 0
-matrix size = 38
-fillins = 36
+method = modified trap
+totiter = 78756
+traniter = 78726
+tranpoints = 18646
+accept = 14059
+rejected = 4587
+matrix size = 54
+fillins = 58
 solver = Normal
-Matrix Compiler1: 3.79 KB object code size  0.4/0.2/[0.1]
-Matrix Compiler2: 3.38 KB object code size  0.3/0.3/[0.1]
-
+Thread vector: 12.0/5.4[2] 0.1/0.9[1] 2.3/1.9[2] 1.1/1.3[1]  2592/500
+Matrix Compiler1:     279 opcodes  1.1/0.7/[0.5]
+Matrix Compiler2: off
