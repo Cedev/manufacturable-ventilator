@@ -1,0 +1,216 @@
+
+   --- Expanded Deck Component Count ---
+A's 1
+B's 70
+G's 17
+R's 17
+V's 4
+tot: 109
+
+
+    --- Expanded Netlist ---
+* C:\Users\Cedric\Documents\manufacturable-ventilator\ltspice\noamp.asc
+b§qs 0 qs i=0.8625326 rpar=1
+b§qc1 0 qc1 i=0.1970575 rpar=1
+b§qc2 0 qc2 i=0.0668160 rpar=1
+b§d1_min 0 d1_min i=if(v(rec1)<2500, 0.9 ,-(0.9 - 0.6)*v(rec1)/1e4+1.25* 0.9 -0.25* 0.6) rpar=1
+b§d2_min 0 d2_min i=if(v(rec2)<2500, 0.9 ,-(0.9 - 0.6)*v(rec2)/1e4+1.25* 0.9 -0.25* 0.6) rpar=1
+b§rec1 0 rec1 i=abs(v(qc1)* 18194.6182692314) rpar=1
+b§rec2 0 rec2 i=abs(v(qc2)* 18194.6182692314) rpar=1
+b§ts 0 ts i=if(0> 3.14159265358979 /2-v(theta)- 0.20944 ,tanh(v(ys)* 10 /(v(ss)+ 10 /3)),1) rpar=1
+b§zet 0 zet i=atan2(v(r)*cos(v(beta)), 10 -v(r)*sin(v(beta))) rpar=1
+b§ss 0 ss i=v(r)*(v(beta)-v(zet)+ 3.14159265358979 /2) rpar=1
+b§ys 0 ys i=sqrt((v(r)*cos(v(beta)))**2+(10 -v(r)*sin(v(beta)))**2)-v(r) rpar=1
+b§t 0 t i=2*cos((2* 3.14159265358979 -acos(-v(b)/2))/3) rpar=1
+b 0 b i=1.5*(-v(ts)+(v(ts)**3/3)+2/3+(2/3+v(ts)-(v(ts)**3/3))*cos(v(theta))) rpar=1
+a§state n001 n003 0 0 0 n004 n002 0 srflop
+b§to2 0 n001 i=if(v(lsp)>=10 ,v(active1),0) rpar=1
+b§to1 0 n003 i=if(v(lsp)>=10 ,v(active2),0) rpar=1
+b§qr 0 qr i=0.5*sqrt(0.3 *v(s1)+1)*(1-v(t))*v(ramp) rpar=1
+b§qe 0 qe i=0.5*(sqrt(0.3 *v(s1)+1)-1)*v(ramp) rpar=1
+b§dyc 0 dyc i=-v(r)*cos(v(beta))+sqrt((cos(v(beta))*v(r))**2- 1 * 1 +2* 1 *v(r)*sin(v(beta))) rpar=1
+b§delpb 0 delpb i=2/((v(r))+if((v(r))>=0,1,-1)* 1e-05 /(1+exp(abs((v(r)))/10)))*v(ramp)**3 rpar=1
+b§pda 0 pda i=.75*(v(ts)+v(t)-(v(ts)**3+v(t)**3)/3)/ 3.45341893472363 *v(ramp) rpar=1
+b§pdi 0 pdi i=0.75*(2/3-v(ts)+v(ts)**3/3)/ 3.45341893472363 *v(ramp) rpar=1
+b§rcmin1 0 rcmin1 i=1/(1 **2*v(d1_min)**2) rpar=1
+b§rcmin2 0 rcmin2 i=1/(1 **2*v(d2_min)**2) rpar=1
+b§rc1d 0 rc1d i=1/(((1.11755707355829 +v(orient)*v(dyc))+if((1.11755707355829 +v(orient)*v(dyc))>=0,1,-1)* 1e-05 /(1+exp(abs((1.11755707355829 +v(orient)*v(dyc)))/10)))**2) rpar=1
+b§rc2d 0 rc2d i=1/(((1.11755707355829 -v(orient)*v(dyc)**2)+if((1.11755707355829 -v(orient)*v(dyc)**2)>=0,1,-1)* 1e-05 /(1+exp(abs((1.11755707355829 -v(orient)*v(dyc)**2))/10)))) rpar=1
+b§rc1 0 rc1 i=max(min(v(rc1d), 50.0151045615776),v(rcmin1)) rpar=1
+b§rc2 0 rc2 i=max(min(v(rc2d), 50.0151045615776),v(rcmin2)) rpar=1
+b§d1 0 d1 i=if(v(rc1)==v(rc1d), 1, v(d1_min)) rpar=1
+b§d2 0 d2 i=if(v(rc2)==v(rc2d), 1, v(d2_min)) rpar=1
+v§ramp ramp 0 1
+b§lsp 0 lsp i=2*v(r)*sin(v(beta)) rpar=1
+r:x1:x3:nc x1:x3:n001 0 1
+g:x1:x3:nc 0 x1:x3:n001 v 0 1
+b:x1:xmin_area:r 0 x1:min_radius i=cos(v(n006))*v(n005)/(cos(v(n006)+v(beta))-cos(v(x1:n002))) rpar=1
+b:x1:xmin_area:x1:xchord:theta 0 x1:xmin_area:x1:nc_02 i=2*acos(v(x1:xmin_area:x1:nc_01)/v(x1:min_radius)) rpar=1
+b:x1:xmin_area:x1:xchord:a 0 x1:xmin_area:x1:area_past i=0.5*v(x1:min_radius)**2*(v(x1:xmin_area:x1:nc_02) - sin(v(x1:xmin_area:x1:nc_02))) rpar=1
+g:x1:xmin_area:x1:xchord:r 0 x1:xmin_area:x1:nc_01 x1:min_radius x1:xmin_area:x1:length_past 1
+r:x1:xmin_area:x1:xchord:r x1:xmin_area:x1:nc_01 0 1
+b:x1:xmin_area:x1:arc 0 x1:nc_01 i=v(x1:min_radius)*(v(x1:xmin_area:x1:omega)) rpar=1
+r:x1:xmin_area:x1:x2:nc x1:xmin_area:x1:x2:n001 0 1
+g:x1:xmin_area:x1:x2:nc 0 x1:xmin_area:x1:x2:n001 n005 0 1
+b:x1:xmin_area:x1:x1 0 x1:nc_02 i=cos(v(beta)-v(x1:xmin_area:x1:omega)/2)*v(n005)/sin(v(x1:xmin_area:x1:omega)/2-v(x1:xmin_area:x1:gamma)) rpar=1
+g:x1:xmin_area:x1:omega x1:xmin_area:x1:gamma x1:xmin_area:x1:omega x1:n002 0 1
+g:x1:xmin_area:x1:gamma n006 x1:xmin_area:x1:gamma beta 0 1
+g:x1:xmin_area:x1:area_past x1:xmin_area:x1:n001 x1:min_area 0 x1:xmin_area:x1:area_past 1
+b:x1:xmin_area:x1:length_past 0 x1:xmin_area:x1:length_past i=if(v(beta) > v(n006), v(x1:min_radius)-v(x1:min_radius)*cos(v(beta)-v(n006))-v(n005)*cos(v(n006)), 0) rpar=1
+r:x1:xmin_area:x1:beta x1:xmin_area:x1:gamma n006 1
+r:x1:xmin_area:x1:theta x1:xmin_area:x1:omega x1:xmin_area:x1:gamma 1
+b:x1:xmin_area:x1:triangular_area x1:xmin_area:x1:n002 x1:xmin_area:x1:n001 i=0.5*cos(v(n006))*v(n005)*v(x1:nc_02) rpar=1
+b:x1:xmin_area:x1:curved_area 0 x1:xmin_area:x1:n002 i=0.5*v(x1:min_radius)**2*(v(x1:xmin_area:x1:omega)-sin(v(x1:xmin_area:x1:omega))) rpar=1
+r:x1:xmin_area:x1:area_past x1:min_area x1:xmin_area:x1:n001 1
+b:x1:pi x1:n002 0 v=3.14159265358979 
+b:x1:xbubble_area:theta 0 theta i=acos(cos(v(n006)+v(beta))-cos(v(n006))*v(n005)/v(r)) rpar=1
+b:x1:xbubble_area:x1:xchord:theta 0 x1:xbubble_area:x1:nc_02 i=2*acos(v(x1:xbubble_area:x1:nc_01)/v(r)) rpar=1
+b:x1:xbubble_area:x1:xchord:a 0 x1:xbubble_area:x1:area_past i=0.5*v(r)**2*(v(x1:xbubble_area:x1:nc_02) - sin(v(x1:xbubble_area:x1:nc_02))) rpar=1
+g:x1:xbubble_area:x1:xchord:r 0 x1:xbubble_area:x1:nc_01 r x1:xbubble_area:x1:length_past 1
+r:x1:xbubble_area:x1:xchord:r x1:xbubble_area:x1:nc_01 0 1
+b:x1:xbubble_area:x1:arc 0 s1 i=v(r)*(v(x1:xbubble_area:x1:omega)) rpar=1
+r:x1:xbubble_area:x1:x2:nc x1:xbubble_area:x1:x2:n001 0 1
+g:x1:xbubble_area:x1:x2:nc 0 x1:xbubble_area:x1:x2:n001 n005 0 1
+b:x1:xbubble_area:x1:x1 0 xcl i=cos(v(beta)-v(x1:xbubble_area:x1:omega)/2)*v(n005)/sin(v(x1:xbubble_area:x1:omega)/2-v(x1:xbubble_area:x1:gamma)) rpar=1
+g:x1:xbubble_area:x1:omega x1:xbubble_area:x1:gamma x1:xbubble_area:x1:omega theta 0 1
+g:x1:xbubble_area:x1:gamma n006 x1:xbubble_area:x1:gamma beta 0 1
+g:x1:xbubble_area:x1:area_past x1:xbubble_area:x1:n001 x1:bubble_area 0 x1:xbubble_area:x1:area_past 1
+b:x1:xbubble_area:x1:length_past 0 x1:xbubble_area:x1:length_past i=if(v(beta) > v(n006), v(r)-v(r)*cos(v(beta)-v(n006))-v(n005)*cos(v(n006)), 0) rpar=1
+r:x1:xbubble_area:x1:beta x1:xbubble_area:x1:gamma n006 1
+r:x1:xbubble_area:x1:theta x1:xbubble_area:x1:omega x1:xbubble_area:x1:gamma 1
+b:x1:xbubble_area:x1:triangular_area x1:xbubble_area:x1:n002 x1:xbubble_area:x1:n001 i=0.5*cos(v(n006))*v(n005)*v(xcl) rpar=1
+b:x1:xbubble_area:x1:curved_area 0 x1:xbubble_area:x1:n002 i=0.5*v(r)**2*(v(x1:xbubble_area:x1:omega)-sin(v(x1:xbubble_area:x1:omega))) rpar=1
+r:x1:xbubble_area:x1:area_past x1:bubble_area x1:xbubble_area:x1:n001 1
+b:x1:r 0 r i=v(r)+if(v(r) > v(x1:min_radius), v(x1:bubble_area)-v(x1:target_area), v(r)+v(x1:min_area)-v(x1:target_area)-v(x1:min_radius)) rpar=1
+b:x1:target_area 0 x1:target_area i=limit(v(v), v(x1:min_area), v(x1:max_area)) rpar=1
+b:x1:xmax_area:theta 0 x1:nc_03 i=acos(cos(v(n006)+v(beta))-cos(v(n006))*v(n005)/v(x1:n001)) rpar=1
+b:x1:xmax_area:x1:xchord:theta 0 x1:xmax_area:x1:nc_02 i=2*acos(v(x1:xmax_area:x1:nc_01)/v(x1:n001)) rpar=1
+b:x1:xmax_area:x1:xchord:a 0 x1:xmax_area:x1:area_past i=0.5*v(x1:n001)**2*(v(x1:xmax_area:x1:nc_02) - sin(v(x1:xmax_area:x1:nc_02))) rpar=1
+g:x1:xmax_area:x1:xchord:r 0 x1:xmax_area:x1:nc_01 x1:n001 x1:xmax_area:x1:length_past 1
+r:x1:xmax_area:x1:xchord:r x1:xmax_area:x1:nc_01 0 1
+b:x1:xmax_area:x1:arc 0 x1:nc_04 i=v(x1:n001)*(v(x1:xmax_area:x1:omega)) rpar=1
+r:x1:xmax_area:x1:x2:nc x1:xmax_area:x1:x2:n001 0 1
+g:x1:xmax_area:x1:x2:nc 0 x1:xmax_area:x1:x2:n001 n005 0 1
+b:x1:xmax_area:x1:x1 0 x1:nc_05 i=cos(v(beta)-v(x1:xmax_area:x1:omega)/2)*v(n005)/sin(v(x1:xmax_area:x1:omega)/2-v(x1:xmax_area:x1:gamma)) rpar=1
+g:x1:xmax_area:x1:omega x1:xmax_area:x1:gamma x1:xmax_area:x1:omega x1:nc_03 0 1
+g:x1:xmax_area:x1:gamma n006 x1:xmax_area:x1:gamma beta 0 1
+g:x1:xmax_area:x1:area_past x1:xmax_area:x1:n001 x1:max_area 0 x1:xmax_area:x1:area_past 1
+b:x1:xmax_area:x1:length_past 0 x1:xmax_area:x1:length_past i=if(v(beta) > v(n006), v(x1:n001)-v(x1:n001)*cos(v(beta)-v(n006))-v(n005)*cos(v(n006)), 0) rpar=1
+r:x1:xmax_area:x1:beta x1:xmax_area:x1:gamma n006 1
+r:x1:xmax_area:x1:theta x1:xmax_area:x1:omega x1:xmax_area:x1:gamma 1
+b:x1:xmax_area:x1:triangular_area x1:xmax_area:x1:n002 x1:xmax_area:x1:n001 i=0.5*cos(v(n006))*v(n005)*v(x1:nc_05) rpar=1
+b:x1:xmax_area:x1:curved_area 0 x1:xmax_area:x1:n002 i=0.5*v(x1:n001)**2*(v(x1:xmax_area:x1:omega)-sin(v(x1:xmax_area:x1:omega))) rpar=1
+r:x1:xmax_area:x1:area_past x1:max_area x1:xmax_area:x1:n001 1
+v:x1:r_max x1:n001 0 100000 
+b3 n006 0 v=0.20944 
+b4 n005 0 v=1.405 
+gorient 0 orient n004 n002 1
+b§zeta 0 zeta i=atan2((8.64 *cos(0.20944)-v(r)*sin(v(beta))),v(r)*cos(v(beta))- 0.905 -0.5- 8.64 *sin(0.20944)) rpar=1
+b§sv 0 sv i=v(r)*(v(beta)+v(zeta)) rpar=1
+b§yv 0 yv i=v(y1)*(0.3 *v(sv)+1)/(0.3 *v(s1)+1) rpar=1
+b§y1 0 y1 i=(0.3 *v(s1)+1)/6*log((1+v(t))/(1-v(t))) rpar=1
+b§dv 0 dv i=if(v(xap)> 8.64 ,v(r)-v(yv)-(8.64 *cos(0.20944)-v(r)*sin(v(beta)))/sin(v(zeta)),0) rpar=1
+b§rva 0 rva i=if(v(xap)- 8.64 < 1.95 ,1/((v(dv))+if((v(dv))>=0,1,-1)* 1e-05 /(1+exp(abs((v(dv)))/10)))**2,1/ 1.95 **2) rpar=1
+brv1 0 rv1 i=v(active1)*v(rva)+v(active2)* 0.262984878369494 rpar=1
+brv2 0 rv2 i=v(active2)*v(rva)+v(active1)* 0.262984878369494 rpar=1
+b§xap 0 xap i=v(xcl)-1/((sin(v(theta)))+if((sin(v(theta)))>=0,1,-1)* 1e-05 /(1+exp(abs((sin(v(theta))))/10))) rpar=1
+b1 0 active1 i=1 rpar=1
+b2 0 active2 i=0 rpar=1
+rorient orient 0 1
+v1 v 0 pulse(0 300 1m 8m 8m 1)
+v2 beta 0 sine(0 0.3 10000 0)
+.tran 0.01
+.option noopiter
+.end
+
+Direct Newton iteration for .op point skipped.
+Starting Gmin stepping
+Gmin = 10
+Gmin = 1.07374
+vernier = 0.5
+vernier = 0.25
+vernier = 0.125
+vernier = 0.0625
+Gmin = 0.995033
+vernier = 0.03125
+vernier = 0.015625
+vernier = 0.0078125
+vernier = 0.00390625
+Gmin = 0.999816
+vernier = 0.00195313
+vernier = 0.000976563
+vernier = 0.000488281
+Gmin = 0
+Gmin stepping succeeded in finding the operating point.
+
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:area)
+Ignoring empty pin current: Ix(x1:x3:x)
+Ignoring empty pin current: Ix(x1:xmin_area:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:step)
+Ignoring empty pin current: Ix(x1:xmin_area:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:r)
+Ignoring empty pin current: Ix(x1:xmax_area:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:step)
+Ignoring empty pin current: Ix(x1:xmax_area:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:beta)
+Ignoring empty pin current: Ix(x1:step)
+Ignoring empty pin current: Ix(x1:area)
+Ignoring empty pin current: Ix(x1:x3:x)
+Ignoring empty pin current: Ix(x1:xmin_area:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:step)
+Ignoring empty pin current: Ix(x1:xmin_area:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:r)
+Ignoring empty pin current: Ix(x1:xmax_area:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:step)
+Ignoring empty pin current: Ix(x1:xmax_area:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:step)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:r)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:beta)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:step)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:r)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:theta)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmin_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xbubble_area:x1:x2:x)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:h)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:xchord:radius)
+Ignoring empty pin current: Ix(x1:xmax_area:x1:x2:x)
+Heightened Def Con from 0.000645216 to 0.000645217
+Heightened Def Con from 0.00105933 ++++++++++++++++++++++++++++++++++++++++++++++++++Fatal Error: Analysis:  Time step too small; time = 0.00105933, timestep = 1.25e-18: trouble with node "zet"
+
